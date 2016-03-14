@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IModuleDAO">
+	<resultMap id="moduleMap" type="com.tower.entity.provides.ModuleEntity">
+		<result column="module_id" property="moduleId"/>
+		<result column="module_name" property="moduleName"/>
+		<result column="module_url" property="moduleUrl"/>
+		<result column="modify_time" property="modifyTime"/>
+		<result column="modify_no" property="modifyNo"/>
+		<result column="modify_name" property="modifyName"/>
+		<result column="need_flag" property="needFlag"/>
+	</resultMap>
+	<select id="queryModuleList" resultMap="moduleMap">
+		<![CDATA[
+			select 
+				module_id , module_name , module_url , modify_time , modify_no , op.oper_name modify_name , need_flag
+			from T_MODULE_INFO m
+			inner join T_POS_OPERATOR op on m.modify_no = op.oper_no
+			where status_flag = '1'
+		]]>	
+	</select>
+	<select id="getModuleByUrlAndRole" resultMap="moduleMap">
+		<![CDATA[
+			select m.* from T_MODULE_INFO m inner join T_MODULE_ROLE mr on m.module_id = mr.module_id  where module_url = #{moduleId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</select>
+	<select id="getModule" resultMap="moduleMap">
+		<![CDATA[
+			select * from T_MODULE_INFO where module_id = #{moduleId}
+		]]>
+	</select>
+	<insert id="saveModule">
+		<![CDATA[
+			insert into T_MODULE_INFO (
+				module_id , module_name , module_url , modify_no , oper_no , status_flag , need_flag
+			)values(
+				#{moduleId} , #{moduleName} , #{moduleUrl} , #{modifyNo} , #{operNo} , '1' , #{needFlag}
+			)
+		]]>
+	</insert>
+	<update id="updModule">
+		<![CDATA[
+			update T_MODULE_INFO set 
+			oper_time = sysdate , 
+			oper_no = #{operNo} 
+		]]>
+		<if test="moduleName != null and moduleName != ''">
+			<![CDATA[
+				, module_name = #{moduleName}
+			]]>
+		</if><if test="moduleUrl != null and moduleUrl != ''">
+			<![CDATA[
+				, module_url = #{moduleUrl}
+			]]>
+		</if><if test="statusFlag != null and statusFlag != ''">
+			<![CDATA[
+				, status_flag = #{statusFlag}
+			]]>
+		</if><if test="needFlag != null and needFlag != ''">
+			<![CDATA[
+				, need_flag = #{needFlag}
+			]]>
+		</if>
+		<![CDATA[
+				where module_id = #{moduleId}
+			]]>
+	</update>
+	
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

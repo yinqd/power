@@ -1,0 +1,116 @@
+/** 
+ + -------------------------- +
+ + contact.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-12-20 11:00:00
+ + -------------------------- +
+**/
+/*----------------------------------------------------------------------------------- */
+/*  css reset */
+/*----------------------------------------------------------------------------------- */
+body,div,p,section,aside,header,
+h1,h2,h3,h4,h5,h6,
+ul,ol,li,dl,dt,dd,
+span,em,i,sup,sub{
+	margin:0;
+	padding:0;
+	}
+h1,h2,h3,h4,h5,h6{
+	font-size:inherit;
+	font-weight:normal;
+	}
+ul,ol{
+	list-style:none;
+	}
+img,a{border:0 none;outline:none;}
+.text-center{
+	text-align:center;
+}
+
+/*----------------------------------------------------------------------------------- */
+/*  css layout */
+/*----------------------------------------------------------------------------------- */
+
+html{}
+body{
+	background-color:#f3f3f3;
+	color:#4a4a4a;
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	font-size:100%;
+	width:100%;
+	}
+a{
+	color:#607fa6;
+	text-decoration: none;
+}
+#contact{
+	padding:0 10px;
+	width:100%;
+	box-sizing:border-box;
+	background-color:#fff;
+}
+#contact > h1{
+	padding:20px 0 5px 0;
+	line-height: 24px;
+	font-weight: 700;
+	font-size: 20px;
+	word-wrap: break-word;
+}
+.rich_media_meta_list > em,
+.rich_media_meta_list > a{
+	display: inline-block;
+	vertical-align: middle;
+	font-weight: 400;
+	font-style: normal;
+	margin-right: .5em;
+	font-size: 12px;
+	width: auto;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	word-wrap: normal;
+	max-width: none;
+}
+.rich_media_meta_list > em{
+	color:#c8c8c8;
+}
+.rich_media_meta_list > a{
+	color:#607fa6;
+	text-decoration: none;
+}
+.media-img{
+	margin:18px 0;
+	width:100%;
+}
+.media-img > img{
+	max-width:100%;
+}
+.contact-cont{
+	padding-bottom:50px;
+	font-size: 16px;
+	color: #3e3e3e;
+}
+.contact-cont > h2{
+	font-weight:bold;
+	margin-bottom:18px;
+
+}
+.contact-cont > div{
+	line-height: 1.6;
+}
+.contact-cont strong{
+	font-weight:normal;
+}
+.contact-cont a{
+	color: #3e3e3e;
+}
+.rich_media_tool{
+	color:#8c8c8c;
+	font-size:12px;
+
+}

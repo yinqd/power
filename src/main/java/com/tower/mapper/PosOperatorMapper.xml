@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.IPosOperatorDAO">
+	<resultMap id="posOperatorResp" type="com.tower.resp.PosOperatorResp">
+		<result column="oper_no" property="operNo"/>
+		<result column="oper_name" property="operName"/>
+	</resultMap>
+
+	<select id="queryOperatorRespList" resultMap="posOperatorResp">
+		<![CDATA[
+			SELECT oper_no ,oper_name FROM T_POS_OPERATOR WHERE Oper_state = '1'
+		]]>
+	</select>
+</mapper>

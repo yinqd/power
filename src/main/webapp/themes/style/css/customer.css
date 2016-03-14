@@ -1,0 +1,275 @@
+/** 
+ + -------------------------- +
+ + customer.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-09
+ + -------------------------- +
+**/
+/*----- css icon ------*/
+.icon-man,
+.icon-women{
+	display:inline-block;
+	height:20px;
+	margin-left:5px;
+	width:20px;
+	text-indent:-9999px;
+	background:url("../img/icon-customer.png") no-repeat;
+	}
+.icon-man{
+	background-position:0px -518px;
+	}
+.icon-women{
+	background-position:0px -553px;
+	}
+/*-----css layout-----*/
+/*客户列表*/
+.customer-tab{
+	width:100%;
+	overflow:hidden;
+	zoom:1;
+	background-color:#f5f5f5;
+	}
+.customer-tab li{
+	float:left;
+	height:33px;
+	line-height:33px;
+	padding:0 10px;
+	margin-right:5px;
+	min-width:110px;
+	color:#5d5d5d;
+	cursor:pointer;
+	font-size:16px;
+	text-align:center;
+	background-color:#dfdfdf;
+	}
+.customer-tab li.current{
+	color:#fff;
+	background-color:#3786d7;
+	}
+.customer-tab li span{
+	font-size:12px;
+	vertical-align:top;
+	}
+.username{
+	width:90px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+}
+/*添加地址 添加发票抬头*/
+.additem-wrap{
+	position:relative;
+	}
+.additem-wrap .icon-plus{
+	position:absolute;
+	left:630px;
+	top:3px;
+	}
+.additem{
+	margin-top:20px;
+	}
+.additem:before,
+.additem:after{
+	content:"";
+	display:block;
+	clear:both;
+	}
+.additem input,
+.additem .close-1{
+	float:left;
+	}
+.additem .close-1{
+	margin-top:6px;
+	}
+/*查看客户信息*/
+.view-customer{
+	}
+.view-customer .panel-title{
+	line-height:24px;
+	background-image:none;
+	}
+.view-customer .panel-title em{
+	padding:2px 10px 4px;
+	color:#919191;
+	font-size:16px;
+	background-color:#d5d5d5;
+	}
+.view-customer .panel-body{
+	margin: 0 30px;
+	padding-left: 35px;
+	padding-right: 35px;
+	}
+.view-portrait{
+	position:relative;
+	padding-left:300px;
+	padding-top:60px;
+	}
+.view-portrait > h2{
+	font-size:34px;
+	margin-bottom:20px;
+	}
+.view-portrait > h2 .customer-mobile{
+	font-size:20px;
+	vertical-align:middle;
+	margin-left:30px;
+	
+}
+.view-portrait .other-info{
+	position:absolute;
+	top:60px;
+	right:0;
+	color:#999;
+}
+.view-portrait .portrait{
+	position:absolute;
+	left:-20px;
+	top:50px;
+	width:300px;
+	text-align:center;
+	}
+.portrait-img{
+	height:190px;
+	margin:20px auto;
+	width:190px;
+	background:#f4f4f4 url("../img/bgnoset.png") no-repeat center;
+	border:5px solid #e7e7e7;
+	border-radius:50%;
+	}
+.portrait-img-man{
+	background-image:url("../img/bgman.png");
+	border-color:#5dd6fa;
+	}
+.portrait-img-women{
+	background-image:url("../img/bgwomen.png");
+	border-color:#ff92a1;
+	}
+.user-type > span{
+	display:inline-block;
+	height:23px;
+	margin:0 5px;
+	text-indent:-9999px;
+	background:url("../img/icon-customer.png") no-repeat;
+	}
+.user-type > span.weixin{
+	width:29px;
+	background-position:0 -630px;
+	}
+.user-type > span.weixin-gray{
+	background-position:-38px -630px;
+	}
+.user-type > span.cum{
+	width:27px;
+	background-position:0 -594px;
+	}
+.user-type > span.cum-gray{
+	background-position:-38px -594px;
+	}
+.user-type > span.vip{
+	width:27px;
+	background-position:0 -673px;
+	}
+.user-type > span.vip-gray{
+	background-position:-38px -673px;
+	}
+.cum-coupons-title,.cum-coupons{
+	padding:0 15px;
+	text-align:center;
+	}
+
+.cum-coupons-title .table-nobd > tbody > tr > td{
+	font-weight:bold;
+	font-size:14px;
+	}
+.select-coupons table{
+	font-size:14px;}
+.cum-coupons ul li{
+	margin-bottom: 10px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	overflow: hidden;
+	}
+.cum-coupons ul li.selected{
+	/*border-color:#f87a7a;*/
+	background-color:#e1f0fe;
+	}
+.cum-coupons .table-nobd > tbody > tr > td{
+	font-size:14px;
+	}
+.positionRelative{
+	position:relative;
+}
+.positionRelative .wrong{
+	position:absolute;
+	left:0;
+	top:32px;
+}
+.statistics-table{
+	margin-bottom:10px;
+	width:100%;
+	border:1px solid #e1f0fe;
+	border-collapse:collapse;
+}
+.statistics-table sub{
+	bottom:0;
+}
+.statistics-table caption{
+	height:20px;
+	line-height:20px;
+	background-color:#e1f0fe;
+	color:#999;
+	font-size:12px;
+	text-align:left;
+	text-indent:10px;
+}
+.statistics-table tbody td{
+	height:32px;
+	border:1px solid #e1f0fe;
+	text-align:center;
+}
+/*customer import export panel*/
+.export-panel-items{
+	margin:0 20px;
+}
+.export-panel-items > li{
+	background-color:#fff;
+	padding:10px 20px;
+	overflow:hidden;
+	width:100%;
+	zoom:1;
+}
+.export-panel-items > li.even{
+	background-color:#f8f8f8;
+}
+.export-panel-items > li:after{
+	content:"";
+	display:block;
+	clear:both;
+}
+.export-panel-items h3{
+	float:left;
+	padding-top:5px;
+	width:15%;
+}
+.export-panel-items dl{
+	float:left;
+	margin-bottom:0;
+	width:85%;
+	overflow:hidden;
+	zoom:1;
+}
+.export-panel-items dl dt{
+	float:left;
+	width:12%;
+}
+.export-panel-items dl dd{
+	float:left;
+	width:88%;
+}
+.export-panel-items dl dd label{
+	width:19%;
+}

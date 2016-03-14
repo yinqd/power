@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.ITerminalDAO">
+	<resultMap id="BaseResultMap" type="com.tower.entity.TerminalEntity">
+		<result column="terminal_guid" property="terminalGuid"/>
+		<result column="terminal_id" property="terminalId"/>
+		<result column="terminal_name" property="terminalName"/>
+		<result column="node_no" property="nodeNo"/>
+		<result column="agent_id" property="agentId"/>
+		<result column="close_flag" property="closeFlag"/>
+		<result column="terminal_type" property="terminalType"/>
+		<result column="terminal_mac" property="terminalMac"/>
+		<result column="terminal_ip" property="terminalIp"/>
+		<result column="modify_time" property="modifyTime"/>
+		<result column="create_time" property="createTime"/>
+		<result column="bk1" property="bk1"/>
+		<result column="bk2" property="bk2"/>
+		<result column="bk3" property="bk3"/>
+	</resultMap>
+
+	<select id="searchTermianlList" resultMap="BaseResultMap">
+		<![CDATA[
+			select temp2.* from(
+			　　select rownum num , temp1.* from(
+			　　  select * from T_TERMINAL_INFO WHERE 1=1
+		]]>	
+		<if test="terminalId != null and terminalId !=''">
+			<![CDATA[
+				terminal_id like '%{terminalId}%'
+			]]>
+		</if>
+		<if test="terminalName != null and terminalName !=''">
+			<![CDATA[
+				terminal_name like '%{terminalName}%'
+			]]>
+		</if>
+		<![CDATA[	
+			 	order by create_time desc
+			　　) temp1 where rownum <= ${pageIndex * pageCount}
+			)temp2   where temp2.num > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	
+	<select id="searchTerminalCount" resultType="java.lang.Integer">
+		<![CDATA[
+			select COUNT(1) from T_TERMINAL_INFO WHERE 1=1
+		]]>	
+		<if test="terminalId != null and terminalId !=''">
+			<![CDATA[
+				terminal_id like '%{terminalId}%'
+			]]>
+		</if>
+		<if test="terminalName != null and terminalName !=''">
+			<![CDATA[
+				terminal_name like '%{terminalName}%'
+			]]>
+		</if>
+	</select>
+
+	<select id="getTerminalInfo" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT * FROM T_TERMINAL_INFO WHERE terminal_id = #{terminalId} and terminal_guid = #{terminalGuid}
+		]]>
+	</select>
+		
+	<insert id="saveTerminalInfo" >
+		<![CDATA[
+			INSERT INTO T_AGENT_INFO ( 
+				terminal_guid , terminal_id , terminal_name , node_no , agent_id , close_flag , terminal_type , terminal_mac , 
+				terminal_ip , BK1 , BK2 , BK3 
+			)
+			VALUES   
+			(#{terminalGuid} , #{terminalId} , #{terminalName} , #{nodeNo} , #{agentId} , 1 ,  #{terminalType} , #{terminalMac} , 
+			#{terminalIp} , #{bk1} , #{bk2} , #{bk3} 
+			)
+		]]>
+	</insert>	
+    <update id="updTerminalInfo">
+    	<![CDATA[
+    		UPDATE T_TERMINAL_INFO SET
+    		MODIFY_TIME = sysdate
+    	]]>
+    	<if test="terminalName != null and terminalName != ''">
+    		<![CDATA[
+    			, terminal_name = #{terminalName}
+    		]]>
+    	</if>
+    	<if test="nodeNo != null and nodeNo != ''">
+    		<![CDATA[
+    			, node_no = #{nodeNo}
+    		]]>
+    	</if>
+    	<if test="agentId != null and agentId != ''">
+    		<![CDATA[
+    			, agent_id = #{agentId}
+    		]]>
+    	</if>
+    	<if test="closeFlag != null and closeFlag != ''">
+    		<![CDATA[
+    			, close_flag = #{closeFlag}
+    		]]>
+    	</if>
+    	<if test="terminalType != null and terminalType != ''">
+    		<![CDATA[
+    			, terminal_type = #{terminalType}
+    		]]>
+    	</if>
+    	<if test="terminalMac != null and terminalMac != ''">
+    		<![CDATA[
+    			, terminal_mac = #{terminalMac}
+    		]]>
+    	</if>
+    	<if test="terminalIp != null and terminalIp != ''">
+    		<![CDATA[
+    			, terminal_ip = #{terminalIp}
+    		]]>
+    	</if>
+    	<if test="bk1 != null and bk1 != ''">
+    		<![CDATA[
+    			, BK1 = #{bk1}
+    		]]>
+    	</if>
+    	<if test="bk2 != null and bk2 != ''">
+    		<![CDATA[
+    			, BK2 = #{bk2}
+    		]]>
+    	</if>
+    	<if test="bk3 != null and bk3 != ''">
+    		<![CDATA[
+    			, BK3 = #{bk3}
+    		]]>
+    	</if>
+    	<![CDATA[
+    			WHERE terminal_id = #{terminalId} and terminal_guid = #{terminalGuid}
+    	]]>
+    </update>
+    
+</mapper>

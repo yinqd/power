@@ -1,0 +1,14 @@
+.modal {
+  position: absolute;
+  z-index: 500; }
+  .modal .close-button {
+    z-index: 100; }
+  .modal header {
+    z-index: 50; }
+  .modal footer {
+    z-index: 10; }
+
+.goku {
+  z-index: 9001; }
+
+/*# sourceMappingURL=z-index.css.map */

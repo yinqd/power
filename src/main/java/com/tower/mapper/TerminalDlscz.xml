@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.ITerminalDlsczDAO">
+	<!-- 交易明细报表 、日报表-->
+	<resultMap id="BaseResultMap" type="com.tower.entity.TerminalDlsczEntity">
+		<result column="agent_id" property="agentId"/>
+		<result column="agent_name" property="agentName"/>
+		<result column="czbzj" property="czbzj"/>
+		<result column="operate_date" property="operateDate"/>
+		<result column="operate_id" property="operateId"/>
+		<result column="czbzj_guid" property="czbzjGuid"/>
+		<result column="node_no" property="nodeNo"/>
+	</resultMap>
+	<!-- 交易明细报表 -->
+	<select id="queryAgentDlsczList" resultMap="BaseResultMap" useCache="false">
+		<![CDATA[
+			select * from (
+				select dlscz.* , ROWNUM rowno from T_TERMINAL_DLSCZ_DETAIL dlscz where agent_id = #{agentId}
+				AND ROWNUM <= ${pageIndex * pageCount} ) t where rowno > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	<!--获取明显报表总数量-->
+	<select id="queryAgentDlsczCount" resultType="java.lang.Integer" useCache="false">
+		<![CDATA[
+			select count(1)
+				from  T_TERMINAL_DLSCZ_DETAIL  dlscz where agent_id = #{agentId}
+		]]>
+	</select>
+	<!--获取明显报表总金额-->
+	<insert id="saveAgentDlscz">
+		<![CDATA[
+			insert T_TERMINAL_DLSCZ_DETAIL (
+				agent_id , czbzj , remark , operate_id , bk1 , bk2 , bk3 , czbzj_guid , node_no 
+			)values(
+				#{agentId} , #{czbzj} , #{remark} , #{operateId} , #{bk1} , #{bk2} , #{bk3} , #{czbzjGuid} , #{nodeNo} 
+			)
+		]]>
+	</insert>
+</mapper>

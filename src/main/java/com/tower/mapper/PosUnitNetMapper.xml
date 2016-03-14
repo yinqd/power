@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.IPosUnitNetDAO">
+	<resultMap id="posUnitNetResp" type="com.tower.resp.PosUnitNetResp">
+		<result column="node_no" property="nodeNo"/>
+		<result column="node_name" property="nodeName"/>
+	</resultMap>
+
+	<select id="queryUnitNetRespList" resultMap="posUnitNetResp">
+		<![CDATA[
+			SELECT node_no , (node_no ||'-'|| node_name) node_name FROM T_POS_UNIT_NET WHERE node_flag = '0'
+		]]>
+	</select>
+</mapper>

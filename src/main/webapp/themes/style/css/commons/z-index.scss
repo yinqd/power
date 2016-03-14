@@ -1,0 +1,59 @@
+$z-layers: (
+        'dropTable':(
+                'table':1,
+                'dragging':2,
+        )
+);
+@function z($layers...) {
+  $keys: '';
+
+  @each $layer in $layers{
+    $keys: $keys + '.' + $layer;
+  }
+  $keys: str-slice($keys, 2);
+  $output: map-find($z-layers, $keys);
+  @if $output == null{
+    @warn 'No layer found for `#{inspect($layers)}` in $z-layers map. Property omitted.';
+  }
+
+  @return $output;
+}
+
+// Before: map-get(map-get(map-get($map, a), b), c)
+// After: map-find($map, 'a.b.c')
+@function map-find($map, $keys) {
+  @while str-index($keys, '.') {
+    $index: str-index($keys, '.');
+
+    // Child elements
+    $map: map-get($map, str-slice($keys, 0, $index - 1));
+    @if type-of($map) != map{
+      @return null;
+    }
+
+    // Rest keys
+    $keys: str-slice($keys, $index + 1);
+  }
+
+  @return map-get($map, $keys);
+}
+
+//.modal {
+//  position: absolute;
+//  z-index: z(modal, base);
+//
+//  .close-button {
+//    z-index: z(modal, close);
+//  }
+//
+//  header {
+//    z-index: z(modal, header);
+//  }
+//
+//  footer {
+//    z-index: z(modal, footer);
+//  }
+//}
+//.goku {
+//  z-index: z(goku);
+//}

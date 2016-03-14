@@ -1,0 +1,57 @@
+/** 
+ + -------------------------- +
+ + report.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-11
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+/*预订量报表*/
+#header > a.btn-back{
+	top:65px;
+	margin-top:0;
+}
+.btn-back:after{
+	border-left-color:#3f3f3f;
+	border-bottom-color:#3f3f3f;
+}
+#header > a.filter{
+	color:#3f3f3f;
+	top:50px;
+	border-top-color:#3f3f3f;
+}
+#header > a.filter:after{
+	border-top-color:#3f3f3f;
+}
+.cycle{
+	width:60%;
+	margin:0 auto;                                                                
+}
+.report-status-level2 > li{
+	width:33%;
+	padding:5px 0 5px 10px;
+}
+.report-status > li:nth-child(2n){
+	padding:5px 0 5px 10px;
+	}
+/*
+.report-status-level2 > li:nth-child(1),
+.report-status-level2 > li:nth-child(4),
+.report-status-level2 > li:nth-child(7),
+.report-status-level2 > li:nth-child(10){
+	padding:5px 5px 5px 10px;
+}
+*/
+.report-status-level1 li:only-child{
+	padding-right:11px;
+	}
+.report-status-level2 > li:nth-child(3n){
+	padding-right:10px;
+	width:34%;
+	}
+                                    

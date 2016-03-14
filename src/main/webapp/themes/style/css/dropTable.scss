@@ -1,0 +1,21 @@
+@import "commons/z-index";
+.dataCount{clear: both;padding: 10px 0;margin: 0 0 15px;color: #fff; overflow: hidden;background: url("../img/bg-hdt.png") repeat-x;
+ span:first-child{color:#008000}
+  span:nth-child(2){color:#ff0}
+  span:nth-child(3){color: red}
+}
+
+.table{width: 100px;height: 100px;background: #e4c652;border-radius: 0%; float: left;margin:20px 20px 20px 20px;text-align: center;
+  cursor: move;position: relative;text-align: center;display: table;z-index: z(drapTable, table);
+  span{ display: table-cell;vertical-align: middle;position: relative; }
+  i {cursor: pointer;visibility: hidden;position: absolute;width: 20px;height: 20px;right: 0px;top: 0px; }
+}
+.disabled,.ui-draggable-disabled{background: #e1e1e1}
+.tableLayer{position:relative;width: 100%;height: 100%;width: 800px;height: 600px;background: #f2dede;overflow: auto;
+  .table{position: absolute;
+    &:hover i{visibility:visible;}
+  }
+}
+.ui-resizable-e,.ui-resizable-s{display: none;width: 0; overflow: hidden;}
+.ui-resizable-handle{display: none}
+.ui-draggable-dragging{z-index: z(dropTable,dragging)}

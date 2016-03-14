@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.IAgentDAO">
+	<resultMap id="BaseResultMap" type="com.tower.entity.AgentEntity">
+		<result column="agent_id" property="agentId"/>
+		<result column="agent_name" property="agentName"/>
+		<result column="agent_linkman" property="agentLinkman"/>
+		<result column="agent_phone" property="agentPhone"/>
+		<result column="agent_addr" property="agentAddr"/>
+		<result column="agent_flag" property="agentFlag"/>
+		<result column="operate_date" property="operateDate"/>
+		<result column="operate_id" property="operateId"/>
+		<result column="remark" property="remark"/>
+		<result column="modify_time" property="modifyTime"/>
+		<result column="bk1" property="bk1"/>
+		<result column="bk2" property="bk2"/>
+		<result column="bk3" property="bk3"/>
+		<result column="node_no" property="nodeNo"/>
+	</resultMap>
+
+	<select id="searchAgentList" resultMap="BaseResultMap">
+		<![CDATA[
+			select temp2.* from(
+			　　select rownum num , temp1.* from(
+			　　  select *  from T_AGENT_INFO WHERE 1=1
+		]]>	
+		<if test="agentId != null and agentId !=''">
+			<![CDATA[
+				AGENT_ID like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName !=''">
+			<![CDATA[
+				AGENT_NAME like '%${agentName}%'
+			]]>
+		</if>
+		<if test="agentAddr != null and agentAddr !=''">
+			<![CDATA[
+				AGENT_ADDR like '%${agentAddr}%'
+			]]>
+		</if>
+		<if test="agentPhone != null and agentPhone !=''">
+			<![CDATA[
+				AGENT_PHONE like '%${agentPhone}%'
+			]]>
+		</if>
+		<if test="agentLinkman != null and agentLinkman !=''">
+			<![CDATA[
+				AGENT_LINKMAN like '%${agentLinkman}%'
+			]]>
+		</if>
+		<![CDATA[	
+			 	order by operate_date desc
+			　　) temp1 where rownum <= ${pageIndex * pageCount}
+			)temp2   where temp2.num > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	
+	<select id="searchAgentCount" resultType="java.lang.Integer">
+		<![CDATA[
+			select COUNT(1) from T_AGENT_INFO WHERE 1=1
+		]]>	
+		<if test="agentId != null and agentId !=''">
+			<![CDATA[
+				AGENT_ID like '%{agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName !=''">
+			<![CDATA[
+				AGENT_NAME like '%{agentName}%'
+			]]>
+		</if>
+		<if test="agentAddr != null and agentAddr !=''">
+			<![CDATA[
+				AGENT_ADDR like '%{agentAddr}%'
+			]]>
+		</if>
+		<if test="agentPhone != null and agentPhone !=''">
+			<![CDATA[
+				AGENT_PHONE like '%{agentPhone}%'
+			]]>
+		</if>
+		<if test="agentLinkman != null and agentLinkman !=''">
+			<![CDATA[
+				AGENT_LINKMAN like '%{agentLinkman}%'
+			]]>
+		</if>
+	</select>
+
+	<select id="getAgentInfo" resultMap="BaseResultMap">
+		<![CDATA[
+			SELECT * FROM T_AGENT_INFO WHERE AGENT_ID = #{agentId}
+		]]>
+	</select>
+		
+	<insert id="saveAgentInfo" >
+		<![CDATA[
+			INSERT INTO T_AGENT_INFO ( 
+				AGENT_ID , AGENT_NAME , AGENT_LINKMAN , AGENT_PHONE , AGENT_ADDR , AGENT_FLAG , OPERATE_ID , REMARK , BK1 , BK2 , BK3 , NODE_NO
+			)
+			VALUES   
+			(max(agentId) + 1 , #{agentName} , #{agentLinkman} , #{agentPhone} , #{agentAddr} , 1 ,  #{operateId} , #{remark} , #{bk1} , #{bk2} , #{bk3} , #{nodeNo})
+		]]>
+	</insert>	
+    <update id="updAgentInfo">
+    	<![CDATA[
+    		UPDATE T_AGENT_INFO SET
+    		MODIFY_TIME = sysdate
+    	]]>
+    	<if test="agentName != null and agentName != ''">
+    		<![CDATA[
+    			, AGENT_NAME = #{agentName}
+    		]]>
+    	</if>
+    	<if test="agentLinkman != null and agentLinkman != ''">
+    		<![CDATA[
+    			, AGENT_LINKMAN = #{agentLinkman}
+    		]]>
+    	</if>
+    	<if test="agentPhone != null and agentPhone != ''">
+    		<![CDATA[
+    			, AGENT_PHONE = #{agentPhone}
+    		]]>
+    	</if>
+    	<if test="agentAddr != null and agentAddr != ''">
+    		<![CDATA[
+    			, AGENT_ADDR = #{agentAddr}
+    		]]>
+    	</if>
+    	<if test="agentFlag != null and agentFlag != ''">
+    		<![CDATA[
+    			, AGENT_FLAG = #{agentFlag}
+    		]]>
+    	</if>
+    	<if test="operateId != null and operateId != ''">
+    		<![CDATA[
+    			, OPERATE_ID = #{operateId}
+    		]]>
+    	</if>
+    	<if test="remark != null and remark != ''">
+    		<![CDATA[
+    			, REMARK = #{remark}
+    		]]>
+    	</if>
+    	<if test="bk1 != null and bk1 != ''">
+    		<![CDATA[
+    			, BK1 = #{bk1}
+    		]]>
+    	</if>
+    	<if test="bk2 != null and bk2 != ''">
+    		<![CDATA[
+    			, BK2 = #{bk2}
+    		]]>
+    	</if>
+    	<if test="bk3 != null and bk3 != ''">
+    		<![CDATA[
+    			, BK3 = #{bk3}
+    		]]>
+    	</if>
+    	<if test="nodeNo != null and nodeNo != ''">
+    		<![CDATA[
+    			, NODE_NO = #{nodeNo}
+    		]]>
+    	</if>
+    	<![CDATA[
+    			WHERE AGENT_ID = #{agentId}
+    	]]>
+    </update>
+    
+</mapper>

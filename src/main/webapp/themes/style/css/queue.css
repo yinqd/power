@@ -1,0 +1,66 @@
+/** 
+ + -------------------------- +
+ + customer.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-09
+ + -------------------------- +
+**/
+/*----- css icon ------*/
+.icon-inqueue,/*排队中*/
+.icon-admission,/*已入场*/
+.icon-passed,/*已过号*/
+.icon-cancelled{
+	color:#fff;
+	padding:0 5px 2px 5px;
+	}
+.icon-inqueue{
+	background-color:#589bf6;
+	}
+.icon-admission{
+	background-color:#6ac46e;
+	}
+.icon-passed,
+.icon-cancelled{
+	color:#858585;
+	background-color:#dedede;
+}
+/*-----css layout-----*/
+/*客户列表*/
+.customer-tab{
+	width:100%;
+	overflow:hidden;
+	zoom:1;
+	background-color:#f5f5f5;
+	}
+.customer-tab li{
+	float:left;
+	height:33px;
+	line-height:33px;
+	padding:0 10px;
+	margin-right:5px;
+	min-width:110px;
+	color:#5d5d5d;
+	cursor:pointer;
+	font-size:16px;
+	text-align:center;
+	background-color:#dfdfdf;
+	}
+.customer-tab li.current{
+	color:#fff;
+	background-color:#3786d7;
+	}
+.customer-tab li span{
+	font-size:12px;
+	vertical-align:top;
+	}
+.link-seniorSearch {
+	float: left;
+	margin-left: 20px;
+	margin-top: 15px;
+	cursor: pointer;
+	}

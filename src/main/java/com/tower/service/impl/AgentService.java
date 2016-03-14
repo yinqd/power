@@ -1,0 +1,99 @@
+package com.tower.service.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.tower.dao.IAgentDAO;
+import com.tower.entity.AgentEntity;
+import com.tower.enums.MsgCodeEnum;
+import com.tower.req.AgentReq;
+import com.tower.resp.MsgEntity;
+import com.tower.resp.PageResp;
+import com.tower.service.BaseService;
+import com.tower.service.IAgentService;
+@Service("AgentService")
+public class AgentService extends BaseService implements IAgentService {
+	@Resource
+	private IAgentDAO agentDAO;
+	/**
+	 * 分页查询代理商信息
+	 */
+	public PageResp searchAgentPage(AgentReq req) {
+		PageResp pr = new PageResp();
+		List<AgentEntity> agentList = this.agentDAO.searchAgentList(req);
+		Integer recordCount = this.agentDAO.searchAgentCount(req);
+		pr.setData(agentList);
+		pr.setRecordCount(recordCount);
+		return pr;
+	}
+
+	/**
+	 * 获取代理商详细信息
+	 * @param id
+	 * @return
+     */
+	public AgentEntity getAgentInfo(String agentId) {
+		return this.getAgentInfo(agentId);
+	}
+
+	/**
+	 * 新增代理商信息
+	 */
+	public MsgEntity saveAgent(AgentEntity agentEntity) {
+		MsgEntity msg = new MsgEntity();
+		if(agentEntity == null){
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			logger.info(getMethodPath() + ".info:AgentEntity is empty");
+			return msg;
+		}
+		try {
+			//this.agentDAO.saveAgentInfo(agentEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			e.printStackTrace();
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		return msg;
+	}
+	/**
+	 * 修改代理商基础信息
+	 */
+	public MsgEntity updAgent(AgentEntity agentEntity) {
+		MsgEntity msg = new MsgEntity();
+		if(agentEntity == null || agentEntity.getAgentId() == null){
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			logger.info(getMethodPath() + ".info:AgentEntity is empty");
+			return msg;
+		}
+		try {
+			this.agentDAO.updAgentInfo(agentEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		return msg;
+	}
+	/**
+	 * 关闭代理商
+	 * @param agentId
+	 * @return
+	 */
+	public MsgEntity delAgent(String agentId) {
+		AgentEntity agentEntity = new AgentEntity();
+		agentEntity.setAgentId(agentId);
+		agentEntity.setAgentFlag("0");
+		return this.updAgent(agentEntity);
+	}
+
+}

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IButtonRoleDAO">
+	<resultMap id="buttonRoleMap" type="com.tower.entity.provides.ButtonRoleEntity">
+		<result column="button_id" property="buttonId"/>
+		<result column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+	</resultMap>
+	<select id="queryButtonRoleList" resultMap="buttonRoleMap">
+		<![CDATA[
+		select mr.role_id role_id , role_name from t_button_role mr 
+		inner join t_role_info r on mr.role_id = r.role_id
+		where button_id = #{buttonId} and mr.status_flag = '1' and r.status_flag = '1'
+		]]>
+	</select>
+	<insert id="beathButtonRole">
+		<![CDATA[
+			insert into t_button_role (
+				button_id , role_id , status_flag
+			)values
+		]]>
+		<foreach collection="list" item="item">
+			<![CDATA[
+				(#{item.buttonId} , #{item.roleId} , '1')
+			]]>
+		</foreach>
+	</insert>
+	<delete id="delButtonRole">
+		<![CDATA[
+			update t_button_role set status_flag = "-1" where button_id = #{buttonId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</delete>
+	
+	<resultMap id="buttonRespMap" type="com.tower.resp.provides.ButtonResp">
+		<result column="button_id" property="buttonId"/>
+		<result column="button_tag_attr" property="buttonTagAttr"/>
+		<result column="button_name_attr" property="buttonNameAttr"/>
+		<result column="button_value_attr" property="buttonValueAttr"/>
+	</resultMap>
+	<select id="queryButtonByRoleAndMenu" resultMap="buttonRespMap">
+		<![CDATA[
+			select button_id , button_tag_attr , button_name_attr , button_value_attr from t_button_role mr
+			inner join t_menu_info m on mr.menu_id = r.menu_id 
+			where r.menu_id = #{menuId} and mr.role_id in 
+		]]>
+		 <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+	</select>
+	
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

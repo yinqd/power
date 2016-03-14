@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.ITerminalDlsczReportDAO">
+	<!-- 交易明细报表 、日报表-->
+	<resultMap id="BaseResultMap" type="com.tower.entity.TerminalDlsczEntity">
+		<result column="agent_id" property="agentId"/>
+		<result column="agent_name" property="agentName"/>
+		<result column="czbzj" property="czbzj"/>
+		<result column="operate_date" property="operateDate"/>
+		<result column="operate_id" property="operateId"/>
+		<result column="czbzj_guid" property="czbzjGuid"/>
+		<result column="node_no" property="nodeNo"/>
+	</resultMap>
+	<!-- 交易明细报表 -->
+	<select id="queryDlsczDetails" resultMap="BaseResultMap" useCache="false">
+		<![CDATA[
+			select * from (
+				select dlscz.agent_id  agent_id , agent_name ,czbzj , dlscz.operate_date  operate_date , dlscz.operate_id  operate_id , czbzj_guid , dlscz.node_no node_no , ROWNUM rowno
+				from  T_TERMINAL_DLSCZ_DETAIL  dlscz
+				inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id
+				where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+				]]>
+		<if test="agentId != null and agentId != ''">
+			<![CDATA[
+				and dlscz.agent_id like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName != ''">
+			<![CDATA[
+				and agent_name like '%${agentName}%'
+			]]>
+		</if>
+		<if test="operateId != null and operateId != ''">
+			<![CDATA[
+				and dlscz.operate_id = #{operateId}
+			]]>
+		</if>
+		<![CDATA[
+				and dlscz.node_no = #{nodeNo}
+		]]>
+		<if test="enableFlag != 1">
+			<![CDATA[
+				and agent.agent_flag = '1'
+			]]>
+		</if>
+		<![CDATA[
+			AND ROWNUM <= ${pageIndex * pageCount} ) t where rowno > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	<!--获取明显报表总数量-->
+	<select id="queryDlsczDetailCount" resultType="java.lang.Integer" useCache="false">
+		<![CDATA[
+			select count(1)
+				from  T_TERMINAL_DLSCZ_DETAIL  dlscz
+				inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id
+				where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+		]]>
+		<if test="agentId != null and agentId != ''">
+			<![CDATA[
+				and dlscz.agent_id like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName != ''">
+			<![CDATA[
+				and agent_name like '%${agentName}%'
+			]]>
+		</if>
+		<if test="operateId != null and operateId != ''">
+			<![CDATA[
+				and dlscz.operate_id = #{operateId}
+			]]>
+		</if>
+		<![CDATA[
+				and dlscz.node_no = #{nodeNo}
+		]]>
+		<if test="enableFlag != 1">
+			<![CDATA[
+				and agent.agent_flag = '1'
+			]]>
+		</if>
+	</select>
+	<!--获取明显报表总金额-->
+	<select id="queryAllCzbzj" resultType="java.lang.Double" useCache="false">
+		<![CDATA[
+			select sum(czbzj)
+				from  T_TERMINAL_DLSCZ_DETAIL  dlscz
+				inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id
+				where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+			]]>
+		<if test="agentId != null and agentId != ''">
+			<![CDATA[
+				and dlscz.agent_id like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName != ''">
+			<![CDATA[
+				and agent_name like '%${agentName}%'
+			]]>
+		</if>
+		<if test="operateId != null and operateId != ''">
+			<![CDATA[
+				and dlscz.operate_id = #{operateId}
+			]]>
+		</if>
+		<![CDATA[
+				and dlscz.node_no = #{nodeNo}
+		]]>
+		<if test="enableFlag != 1">
+			<![CDATA[
+				and agent.agent_flag = '1'
+			]]>
+		</if>
+	</select>
+	<!-- 交易明细月报 、年报-->
+	<resultMap id="dlsczReport" type="com.tower.resp.report.DlsczReportResp">
+		<result column="operate_date" property="operateDate"/>
+		<result column="agent_name" property="agentName"/>
+		<result column="recharge_count" property="rechargeCount"/>
+		<result column="recharge_price" property="rechargePrice"/>
+	</resultMap>
+	<!-- 交易明细月报 、年报总计-->
+	<resultMap id="dlsczTotalReport" type="com.tower.resp.report.DlsczTotalResp">
+		<result column="recharge_count" property="rechargeCount"/>
+		<result column="recharge_price" property="rechargePrice"/>
+	</resultMap>
+	<select id="queryDlsczMonthReport" resultMap="dlsczReport">
+		<![CDATA[
+		   select * from (
+			   select tt.* , rownum rn from (
+				  select t.operate_date , t.agent_name , count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				    select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 10) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id 
+				   where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+		]]>
+			<if test="agentId != null and agentId != ''">
+				<![CDATA[
+					and dlscz.agent_id like '%${agentId}%'
+				]]>
+			</if>
+			<if test="agentName != null and agentName != ''">
+				<![CDATA[
+					and agent_name like '%${agentName}%'
+				]]>
+			</if>
+			<if test="operateId != null and operateId != ''">
+				<![CDATA[
+					and dlscz.operate_id = #{operateId}
+				]]>
+			</if>
+			<![CDATA[
+					and dlscz.node_no = #{nodeNo}
+			]]>
+			<if test="enableFlag != 1">
+				<![CDATA[
+					and agent.agent_flag = '1'
+				]]>
+			</if>
+		<![CDATA[	    
+				    ) t group by t.operate_date , t.agent_name , t.recharge_count order by t.operate_date desc
+				)  tt where rownum <= ${pageIndex * pageCount}
+			) where rn > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	
+	<select id="queryDlsczMonthReportCount" resultType="java.lang.Integer">
+		<![CDATA[
+		select count(1) from (
+		    select t.operate_date , t.agent_name , count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				   select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 10) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO agent on dlscz.agent_id = agent.agent_id 
+				    where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+		]]>
+		<if test="agentId != null and agentId != ''">
+			<![CDATA[
+				and dlscz.agent_id like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName != ''">
+			<![CDATA[
+				and agent_name like '%${agentName}%'
+			]]>
+		</if>
+		<if test="operateId != null and operateId != ''">
+			<![CDATA[
+				and dlscz.operate_id = #{operateId}
+			]]>
+		</if>
+		<![CDATA[
+				and dlscz.node_no = #{nodeNo}
+		]]>
+		<if test="enableFlag != 1">
+			<![CDATA[
+				and agent.agent_flag = '1'
+			]]>
+		</if>
+		<![CDATA[
+			) t group by t.operate_date , t.agent_name , t.recharge_count )
+		]]>
+	</select>
+	<select id="dlsczDlsczMonthTotalReport" resultMap="dlsczTotalReport">
+		<![CDATA[
+				  select count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				    select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 10) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id 
+				    where dlscz.operate_date >= TO_DATE(#{startTime},'YYYY-MM-DD hh24:mi:ss')
+				and dlscz.operate_date <= TO_DATE(#{endTime},'YYYY-MM-DD hh24:mi:ss')
+		]]>
+			<if test="agentId != null and agentId != ''">
+				<![CDATA[
+					and dlscz.agent_id like '%${agentId}%'
+				]]>
+			</if>
+			<if test="agentName != null and agentName != ''">
+				<![CDATA[
+					and agent_name like '%${agentName}%'
+				]]>
+			</if>
+			<if test="operateId != null and operateId != ''">
+				<![CDATA[
+					and dlscz.operate_id = #{operateId}
+				]]>
+			</if>
+			<![CDATA[
+					and dlscz.node_no = #{nodeNo}
+			]]>
+			<if test="enableFlag != 1">
+				<![CDATA[
+					and agent.agent_flag = '1'
+				]]>
+			</if>
+		<![CDATA[	    
+			) t
+		]]>
+	</select>
+	
+	
+	
+	<!-- 年报表 -->
+	<select id="queryDlsczYearReport" resultMap="dlsczReport">
+		<![CDATA[
+		   select * from (
+			   select tt.* , rownum rn from (
+				  select t.operate_date , t.agent_name , count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				    select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id 
+				    where TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') >= TO_DATE(#{startTime},'YYYY-MM')
+					and TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') <= TO_DATE(#{endTime},'YYYY-MM')
+		]]>
+			<if test="agentId != null and agentId != ''">
+				<![CDATA[
+					and dlscz.agent_id like '%${agentId}%'
+				]]>
+			</if>
+			<if test="agentName != null and agentName != ''">
+				<![CDATA[
+					and agent_name like '%${agentName}%'
+				]]>
+			</if>
+			<if test="operateId != null and operateId != ''">
+				<![CDATA[
+					and dlscz.operate_id = #{operateId}
+				]]>
+			</if>
+			<![CDATA[
+					and dlscz.node_no = #{nodeNo}
+			]]>
+			<if test="enableFlag != 1">
+				<![CDATA[
+					and agent.agent_flag = '1'
+				]]>
+			</if>
+		<![CDATA[	    
+				    ) t group by t.operate_date , t.agent_name , t.recharge_count order by t.operate_date desc
+				)  tt where rownum <= ${pageIndex * pageCount}
+			) where rn > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	
+	<select id="queryDlsczYearReportCount" resultType="java.lang.Integer">
+		<![CDATA[
+		select count(1) from (
+		    select t.operate_date , t.agent_name , count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				   select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO agent on dlscz.agent_id = agent.agent_id 
+				    where TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') >= TO_DATE(#{startTime},'YYYY-MM')
+					and TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') <= TO_DATE(#{endTime},'YYYY-MM')
+		]]>
+		<if test="agentId != null and agentId != ''">
+			<![CDATA[
+				and dlscz.agent_id like '%${agentId}%'
+			]]>
+		</if>
+		<if test="agentName != null and agentName != ''">
+			<![CDATA[
+				and agent_name like '%${agentName}%'
+			]]>
+		</if>
+		<if test="operateId != null and operateId != ''">
+			<![CDATA[
+				and dlscz.operate_id = #{operateId}
+			]]>
+		</if>
+		<![CDATA[
+				and dlscz.node_no = #{nodeNo}
+		]]>
+		<if test="enableFlag != 1">
+			<![CDATA[
+				and agent.agent_flag = '1'
+			]]>
+		</if>
+		<![CDATA[
+			) t group by t.operate_date , t.agent_name , t.recharge_count )
+		]]>
+	</select>
+	<select id="dlsczDlsczYearTotalReport" resultMap="dlsczTotalReport" >
+		<![CDATA[
+				  select count(t.recharge_count) recharge_count  , sum(t.czbzj) recharge_price   from (
+				    select substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7) operate_date , agent_name , 1 recharge_count , czbzj 
+				    from T_TERMINAL_DLSCZ_DETAIL dlscz inner join T_AGENT_INFO  agent on dlscz.agent_id = agent.agent_id 
+				    where TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') >= TO_DATE(#{startTime},'YYYY-MM')
+					and TO_DATE(substr(to_char(dlscz.operate_date , 'yyyy-mm-dd hh24:mi:ss') ,0, 7),'YYYY-MM') <= TO_DATE(#{endTime},'YYYY-MM')
+		]]>
+			<if test="agentId != null and agentId != ''">
+				<![CDATA[
+					and dlscz.agent_id like '%${agentId}%'
+				]]>
+			</if>
+			<if test="agentName != null and agentName != ''">
+				<![CDATA[
+					and agent_name like '%${agentName}%'
+				]]>
+			</if>
+			<if test="operateId != null and operateId != ''">
+				<![CDATA[
+					and dlscz.operate_id = #{operateId}
+				]]>
+			</if>
+			<![CDATA[
+					and dlscz.node_no = #{nodeNo}
+			]]>
+			<if test="enableFlag != 1">
+				<![CDATA[
+					and agent.agent_flag = '1'
+				]]>
+			</if>
+		<![CDATA[	    
+			) t
+		]]>
+	</select>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

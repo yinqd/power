@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IModuleRoleDAO">
+	<resultMap id="moduleRoleMap" type="com.tower.entity.provides.ModuleRoleEntity">
+		<result column="module_id" property="moduleId"/>
+		<result column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+	</resultMap>
+	<select id="queryModuleRoleList" resultMap="moduleRoleMap">
+		<![CDATA[
+		select mr.role_id role_id , role_name from t_module_role mr 
+		inner join t_role_info r on mr.role_id = r.role_id
+		where menu_id = #{menuId} and mr.status_flag = '1' and r.status_flag = '1'
+		]]>
+	</select>
+	<insert id="beathModuleRole">
+		<![CDATA[
+			insert into t_module_role (
+				module_id , role_id , status_flag
+			)values
+		]]>
+		<foreach collection="list" item="item">
+			<![CDATA[
+				(#{item.moduleId} , #{item.roleId} , '1')
+			]]>
+		</foreach>
+	</insert>
+	<delete id="delModuleRole">
+		<![CDATA[
+			update t_module_role set status_flag = "-1" where module_id = #{moduleId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</delete>
+	<resultMap id="moduleRespMap" type="com.tower.resp.provides.ModuleResp">
+		<result column="module_id" property="moduleId"/>
+		<result column="module_name" property="moduleName"/>
+		<result column="module_url" property="moduleUrl"/>
+	</resultMap>
+	<select id="queryModuleByRole" resultMap="menuRespMap">
+		<![CDATA[
+			select module_id , module_name , module_url from t_module_role mr
+			inner join t_module_info m on mr.module_id = r.module_id 
+			where mr.role_id in 
+		]]>
+		 <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+	</select>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

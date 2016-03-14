@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IMenuRoleDAO">
+	<resultMap id="menuRoleMap" type="com.tower.entity.provides.MenuRoleEntity">
+		<result column="menu_id" property="menuId"/>
+		<result column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+	</resultMap>
+	<select id="queryMenuRoleList" resultMap="menuRoleMap">
+		<![CDATA[
+		select mr.role_id role_id , role_name from t_menu_role mr 
+		inner join t_role_info r on mr.role_id = r.role_id
+		where menu_id = #{menuId} and mr.status_flag = '1' and r.status_flag = '1'
+		]]>
+	</select>
+	<insert id="beathMenuRole">
+		<![CDATA[
+			insert into t_menu_role (
+				menu_id , role_id , status_flag
+			)values
+		]]>
+		<foreach collection="list" item="item">
+			<![CDATA[
+				(#{item.menuId} , #{item.roleId} , '1')
+			]]>
+		</foreach>
+	</insert>
+	<delete id="delMenuRole">
+		<![CDATA[
+			update t_menu_role set status_flag = "-1" where menu_id = #{menuId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</delete>
+	
+	
+	<resultMap id="menuRespMap" type="com.tower.resp.provides.MenuResp">
+		<result column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_url" property="menuUrl"/>
+	</resultMap>
+	<select id="queryMenuByRole" resultMap="menuRespMap">
+		<![CDATA[
+			select menu_id , menu_name , menu_url from t_menu_role mr
+			inner join t_menu_info m on mr.menu_id = r.menu_id 
+			where mr.role_id in 
+		]]>
+		 <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+	</select>
+	<select id="queryMenuByRoleAndModule" resultMap="menuRespMap">
+		<![CDATA[
+			select menu_id , menu_name , menu_url from t_menu_role mr
+			inner join t_menu_info m on mr.menu_id = r.menu_id 
+			where r.module_id = #{moduleId} and mr.role_id in 
+		]]>
+		 <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+	</select>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

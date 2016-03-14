@@ -1,0 +1,124 @@
+/** 
+ + -------------------------- +
+ + login.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-12-2 11:00:00
+ + -------------------------- +
+**/
+/*----------------------------------------------------------------------------------- */
+/*  css reset */
+/*----------------------------------------------------------------------------------- */
+body,div,p,section,aside,header,
+h1,h2,h3,h4,h5,h6,
+ul,ol,li,dl,dt,dd,
+span,em,i,sup,sub{
+	margin:0;
+	padding:0;
+	}
+h1,h2,h3,h4,h5,h6{
+	font-size:inherit;
+	font-weight:normal;
+	}
+ul,ol{
+	list-style:none;
+	}
+img,a{border:0 none;outline:none;}
+.text-center{
+	text-align:center;
+}
+
+/*----------------------------------------------------------------------------------- */
+/*  css layout */
+/*----------------------------------------------------------------------------------- */
+
+html{}
+body{
+	background-color:#fff;
+	color:#4a4a4a;
+	font-family:Microsoft YaHei;
+	font-size:100%;
+	width:100%;
+	}
+#login{
+	margin: 30px auto;
+	padding-bottom:30px;
+	width:100%;
+	background-color:#fff;
+	/*border-radius:30px;
+	box-shadow:0px 0px 6px #aaa;*/
+}
+#login > h1{
+	padding-top:80px;
+	background:url("../../img/framework/login.png") no-repeat center 26px;
+	background-size:97px 42px;
+	color:#4ca6f4;
+	font-size:14px;
+	text-align:center;
+}
+.loginInfo{
+	padding:10px 30px 30px 30px;
+}
+.loginInfo > li{
+	position:relative;
+	padding-left:60px;
+	padding-top:15px;
+	padding-bottom:5px;
+	width:100%;
+	box-sizing:border-box;
+	border-bottom:1px solid #e4e1e1;
+}
+.loginInfo > li > label{
+	position:absolute;
+	left: 0;
+	top:15px;
+	display:inline-block;
+	height:20px;
+	line-height:20px;
+	width:80px;
+	color:#9f9f9f;
+	font-size:14px;
+}
+.loginInfo > li > input[type="text"],
+.loginInfo > li > input[type="password"],
+.loginInfo > li > input[type="number"],
+.loginInfo > li > input[type="tel"]{
+	display:block;
+	height:20px;
+	line-height:20px;
+	max-width:100%;
+	color:#5f5f5f;
+	font-size:14px;
+	border:0 none;
+}
+.btn-login{
+	display: inline-block;
+	position:relative;
+	padding-left:26px;
+	color:#4ca6f4;
+	font-size:18px;
+	text-align: center;
+	text-decoration:none;
+}
+.btn-login:after{
+	content:"";
+	display:block;
+	width:18px;
+	height:18px;
+	position:absolute;
+	left:0;
+	top:50%;
+	margin-top:-9px;
+	background:url(../../img/framework/login_up.png) no-repeat center;
+	background-size:18px 18px;
+}
+.error{
+	margin:30px 10px;
+	text-align: center;
+	color:#9f9f9f;
+	font-size: 12px;
+}

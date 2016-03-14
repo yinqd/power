@@ -1,0 +1,142 @@
+/** 
+ + -------------------------- +
+ + marketing.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-04-01 15:00:00
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+/*帮助中心*/
+.question-detail{/*问答详情弹框内容显示*/
+	}
+.question-detail h3{
+		overflow:hidden;
+		margin-bottom:20px;
+		font-size:14px;
+		}
+.question-detail h3 span{
+	float:right;
+	}
+.question-detail dl{
+	font-size:16px;
+	}
+.question-detail dl dt{
+	font-weight: normal;
+	}
+.question-detail dl dt em{
+	font-weight:bold;
+}
+.question-detail dl dd{
+	position:relative;
+	padding-left:2em;
+	margin-top:10px;
+	word-wrap:break-word;
+	}
+.question-detail dl dd em{
+	position:absolute;
+	top:0;
+	left:0;
+	font-weight:bold;
+	}
+
+	
+/*帮助中心 视频列表*/
+.video-items{
+	overflow:hidden;
+	}
+.video-items li{
+	width:175px;
+	height:165px;
+	overflow:hidden;
+	float:left;
+	margin-top:20px;
+	margin-left:40px;
+	}
+.video-items li > a{color:#555;}
+.video-items li > a:hover{ text-decoration:none;}
+.video-items li .item-main{
+	position:relative;
+	}
+.video-items li .item-main img{
+	width:175px;
+	height:124px;
+	border:1px solid #ddd;
+	}
+.video-items li .item-main h3,
+.video-items li .item-main .item-layer,
+.video-items li .item-main .item-layer-1{
+	position:absolute;
+	left:0;
+	bottom:0;
+	}
+.video-items li .item-main h3,
+.video-items li .item-main .item-layer-1{
+	height:30px;
+	line-height:30px;
+	color:#fff;
+	z-index:3;
+	width:100%;
+	overflow:hidden;
+	padding:0 5px;
+	}
+.video-items li .item-main .item-layer{
+	top:0;
+	right:0;
+	background-color:#000;
+	opacity:0.5;
+	z-index:1;
+	display:none;
+	}
+.video-items li .item-main .item-layer-1{
+	background-color:#000;
+	opacity:0.8;
+	z-index:2;
+	}
+.video-introduction{
+	position:relative;
+	max-height:40px;
+	margin-bottom:5px;
+	width:100%;
+	overflow:hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	}
+.video-time{
+	font-size:12px;
+	text-align:right;
+	}
+.video-time span{color:#bdbdbd;}
+/*帮助中心 视频详情*/
+.video-main{
+	width:80%;
+	margin:0 auto;
+	}
+.video-main .video{
+	margin:0 auto;
+	}
+.video-main .video video{
+	display:block;
+	width:944px;
+	}
+.video-main h3{
+	margin:20px 0 10px;
+	font-size:18px;
+	font-weight:bold;
+	}
+.video-main .sub-info{
+	margin:10px 0;
+	}
+.video-main .info{
+	position:relative;
+	padding-left:3em;
+	min-height:20px;
+	}
+.video-main .info em{
+	position:absolute;
+	left:0;
+	}

@@ -1,0 +1,350 @@
+/** 
+ + -------------------------- +
+ + base.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-11-25 11:00:00
+ + -------------------------- +
+**/
+/*----------------------------------------------------------------------------------- */
+/*  css reset */
+/*----------------------------------------------------------------------------------- */
+body,div,p,section,aside,header,
+h1,h2,h3,h4,h5,h6,
+ul,ol,li,dl,dt,dd,
+span,em,i,sup,sub{
+	margin:0;
+	padding:0;
+	}
+h1,h2,h3,h4,h5,h6{
+	font-size:inherit;
+	font-weight:normal;
+	}
+ul,ol{
+	list-style:none;
+	}
+img,a{border:0 none;outline:none;}
+/*----------------------------------------------------------------------------------- */
+/*  css general */
+/*----------------------------------------------------------------------------------- */
+.clear{clear:both;}
+/*----------------------------------------------------------------------------------- */
+/*  btn icon */
+/*----------------------------------------------------------------------------------- */
+.btn-back{
+	padding-left:15px;
+	position:relative;
+	text-indent:-9999px;
+	}
+.btn-back:after{
+	border-left:1px solid #fff;
+	border-bottom:1px solid #fff;
+	content:"";
+	display:block;
+	height:9px;
+	width:9px;
+	position:absolute;
+	left:0;
+	top:50%;
+	margin-top:-5px;
+	-moz-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
+	-ms-transform:rotate(45deg);
+	transform:rotate(45deg);
+	}
+/*----------------------------------------------------------------------------------- */
+/*  css form */
+/*----------------------------------------------------------------------------------- */
+/*----------------------------------------------------------------------------------- */
+/*  css layout */
+/*----------------------------------------------------------------------------------- */
+
+html{}
+body{
+	padding-top:45px;
+	background-color:#fff;
+	color:#4a4a4a;
+	font-family:Microsoft YaHei;
+	font-size:100%;
+	width:100%;
+	}
+#header{
+	background-color:#2c3337;
+	color:#fff;
+	height:45px;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index:999;
+	width:100%;
+	}
+#header > a{
+	color:#fff;
+	display:inline-block;
+	text-decoration:none;
+	position:absolute;
+	}
+#header > a.btn-back{
+	/*top:50%;
+	margin-top:-10px;*/
+	height:100%;
+	line-height:100%;
+	left:10px;
+	padding-left:35px;
+	}
+#header > a.filter{
+	font-size:14px;
+	line-height:45px;
+	padding-right:20px;
+	top:0;
+	right:10px;
+	}
+#header > a.filter:after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:50%;
+	right:0;
+	width:0px; 
+	height:0px; 
+	border-left:5px solid transparent;
+	border-right:5px solid transparent;
+	border-top:5px solid #fff;
+	font-size:0px;
+	line-height:0px;
+	}
+#header > h1{
+	line-height:45px;
+	text-align:center;
+	}
+section{
+	width:100%;
+	}
+#nav{}
+#nav > ul{
+	margin-bottom:10px;
+	background-color:#fff;
+	border: 1px solid #ddd;
+	border-width:1px 0;
+}
+#nav > ul > li{
+	border-bottom:1px solid #ddd;
+}
+#nav > ul > li:last-child{
+	border-bottom:0 none;
+}
+#nav > ul > li > a{
+	display: block;
+	height:40px;
+	padding-left:10px;
+	position: relative;
+	line-height:40px;
+	color:#3f3f3f;
+	font-size:14px;
+	text-decoration:none;
+}
+#nav > ul > li > a:after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:50%;
+	right:10px;
+	margin-top: -5px;
+	height:9px;
+	width:9px;
+	border-bottom:1px solid #5f5f5f;
+	border-right:1px solid #5f5f5f;
+	-webkit-transform:rotate(-45deg);
+}
+/*条件分析列表*/
+#filter-con,
+.filter-con{
+	background-color:#f6f6f6;
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	width:0;
+	height:100%;
+	z-index:1000;
+	overflow:hidden;
+	/*-webkit-transition:all .5s ease-in .1s;
+	-moz-transition:all .5s ease-in .1s;
+	-ms-transition:all .5s ease-in .1s;
+	-o-transition:all .5s ease-in .1s;*/
+	/*-webkit-transform:translate(0, 0);*/
+	}
+#filter-con .btn-back:after,
+.filter-con .btn-back:after{
+	border-color:#d2d2d2;
+	}
+.operation{
+	background-color:#fff;
+	height:45px;
+	line-height:45px;
+	font-size:14px;
+	padding:0 10px;
+	overflow:hidden;
+	}
+#filter-con .operation > a{
+	display:block;
+	float:left;
+	width:50%;
+	box-sizing:border-box;
+	color:#444;
+	text-decoration:none;
+	}
+#filter-con .operation a.btn-back{text-align:left;text-indent:0;}
+.operation .btn-confirm{text-align:right;}
+.filter-conditions{
+	position:absolute;
+	top:45px;
+	left:0;
+	bottom:0;
+	margin:10px 0 0;
+	padding:0 10px;
+	width:100%;
+	height:100%;
+	box-sizing:border-box;
+	overflow-y:auto;
+	overflow-x:hidden;
+	background-color:#fff;
+	
+	}
+.filter-conditions > li{
+	font-size:14px;
+	height:42px;
+	line-height:42px;
+	border-bottom:1px solid #d2d2d2;
+	}
+.filter-conditions > li > a{
+	position:relative;
+	display:block;
+	padding-right:20px;
+	width:100%;
+	box-sizing:border-box;
+	white-space:nowrap;
+	overflow:hidden;
+	text-overflow:ellipsis;
+	color:#444;
+	text-decoration:none;
+	}
+.filter-conditions > li > a.current{
+	color:#f30;
+	}
+/*.filter-conditions > li > a.current:after{
+	position: absolute;
+	top:50%;
+	left:5px;
+	margin-top:-10px;
+	content: "";
+	display: block;
+	height:15px;
+	width:6px;
+	border-bottom: 1px solid #f30;
+	border-right:1px solid #f30;
+	-webkit-transform:rotate(45deg);
+	
+}*/
+.filter-conditions > li > a.lower-menu:before{
+	position: absolute;
+	top:50%;
+	right:5px;
+	margin-top:-5px;
+	content: "";
+	display: block;
+	height:9px;
+	width:9px;
+	border-bottom: 1px solid #d2d2d2;
+	border-right:1px solid #d2d2d2;;
+	-webkit-transform:rotate(-45deg);
+}
+.filter-conditions > li > a .level-1{
+	float: left;
+}
+.filter-conditions > li > a .level-2{
+	float: right;
+	color:#4a4a4a;
+}
+/*.filter-conditions > li > a span.selected{
+	color:#f60;
+}*/
+/*sub menu*/
+.filter-con2 .operation > a{position: absolute;}
+.filter-con .operation > a:after{
+	border-color:#d2d2d2;
+}
+.filter-con2 .filter-con-title{
+	margin:0 40px;
+	text-align: center;
+}
+/*未查询到结果提示框*/
+.notSearchContent{
+	width:100%;
+	background:url("../../img/failure.png") no-repeat center 10px;
+	background-size:82px 79px;
+	padding-top:90px; 
+	font-size:12px;
+	text-align:center;
+}
+/*great bangbangda */
+.great{
+	width:100%;
+	background:url("../../img/great.png") no-repeat center 10px;
+	background-size:82px 79px;
+	padding-top:90px; 
+	font-size:12px;
+	text-align:center;
+}
+/*change cycle time*/
+.operation-time{
+	position:relative;
+	width:100%;
+	padding: 10px;
+	box-sizing:border-box;
+	color:#a0cdeb;
+	font-size:14px;
+	text-align: center;
+}
+.operation-time > .current-date{
+	color:#77add1;
+}
+.operation-time > .prev,
+.operation-time > .next{
+	position:absolute;
+	top:10px;
+}
+.operation-time > .prev{
+	left:10px;
+	padding-left:15px;
+}
+.operation-time > .next{
+	right:10px;
+	padding-right:15px;
+}
+.operation-time > .prev:after,
+.operation-time > .next:after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:5px;
+	width:9px;
+	height: 9px;
+	border-bottom:1px solid #a0cdeb;
+	border-left:1px solid #a0cdeb;
+	/*border-top:6px solid transparent;
+	border-right:6px solid transparent;*/
+	
+}
+.operation-time > .prev:after{
+	left:2px;
+	-webkit-transform:rotate(45deg);
+}
+.operation-time > .next:after{
+	right:2px;
+	-webkit-transform:rotate(225deg);
+}

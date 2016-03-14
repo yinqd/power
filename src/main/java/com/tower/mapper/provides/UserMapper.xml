@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IUserDAO">
+	<resultMap id="userVoEntity" type="com.tower.resp.UserResp">
+		<result column="oper_name" property="operName"/>
+		<result column="oper_no" property="operNo"/>
+		<result column="oper_stationno" property="operStationno"/>
+		<result column="oper_stationname" property="operStationname"/>
+	</resultMap>
+	<select id="getUserReqByNameAndPsd" resultMap="userVoEntity">
+		<![CDATA[
+			select oper_name , oper_no , oper_stationno , node_name oper_stationname from T_POS_OPERATOR
+				inner join T_POS_UNIT_NET on node_no = oper_stationno
+			where oper_name = #{operName} and oper_no = #{operNo} and oper_psd = #{operPsd} and Oper_state = '1'
+		]]>	
+	</select>
+	<resultMap id="userMap" type="com.tower.entity.provides.UserEntity">
+		<result column="oper_name" property="operName"/>
+		<result column="oper_no" property="operNo"/>
+		<result column="oper_stationno" property="operStationno"/>
+		<result column="oper_stationname" property="operStationname"/>
+		<result column="oper_purview" property="operPurview"/>
+		<result column="oper_remark" property="operRemark"/>
+		<result column="oper_date" property="operDate"/>
+		<result column="oper_stationname" property="operStationname"/>
+		<result column="up_flag" property="upFlag"/>
+	</resultMap>
+	<select id="queryUserList" resultMap="userMap">
+		<![CDATA[
+		select * from (
+			select oper_name , oper_no , oper_stationno , oper_purview , oper_remark , oper_date , up_flag , node_name oper_stationname , ROWNOW rn
+			from T_POS_OPERATOR
+				inner join T_POS_UNIT_NET on node_no = oper_stationno
+			where Oper_state = '1'
+		]]>	
+		<if test="nodeNo != null and nodeNo != ''">
+			<![CDATA[
+				and oper_no = #{operNo}
+			]]>
+		</if>
+		<if test="operName != null and operName != ''">
+			<![CDATA[
+				and oper_name like '%${operName}%'
+			]]>
+		</if>
+		<![CDATA[
+			AND ROWNUM <= ${pageIndex * pageCount} ) t where rn > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	<select id="queryUserCount" resultType="java.lang.Integer">
+		<![CDATA[
+			select count(1) from T_POS_OPERATOR inner join T_POS_UNIT_NET on node_no = oper_stationno where Oper_state = '1'
+		]]>	
+		<if test="nodeNo != null and nodeNo != ''">
+			<![CDATA[
+				and oper_no = #{operNo}
+			]]>
+		</if>
+		<if test="operName != null and operName != ''">
+			<![CDATA[
+				and oper_name like '%${operName}%'
+			]]>
+		</if>
+	</select>
+	<select id="getUser" resultMap="userMap">
+		<![CDATA[
+			select *  from T_POS_OPERATOR where Oper_no = #{operNo}
+		]]>	
+	</select>
+	<insert id="saveUser">
+		<![CDATA[
+			insert into T_POS_OPERATOR 
+			(Oper_no,Oper_name,Oper_psd,Oper_state,Oper_stationNO,Oper_purview,oper_remark) 
+			values
+			(#{operNo},#{operName},#{operPsd},'1',#{operStationno},#{operPurview},#{operRemark});
+		]]>
+	</insert>
+	<update id="updUser">
+		<![CDATA[
+			update T_POS_OPERATOR up_flag = '1' , up_date = sysdate
+		]]>
+		<if test="operName != null and operName != ''">
+			<![CDATA[
+				, Oper_name = #{operName}
+			]]>
+		</if>
+		<if test="operPsd != null and operPsd != ''">
+			<![CDATA[
+				, Oper_psd = #{operPsd}
+			]]>
+		</if>
+		<if test="operState != null and operState != ''">
+			<![CDATA[
+				, Oper_state = #{operState}
+			]]>
+		</if>
+		<if test="operStationno != null and operStationno != ''">
+			<![CDATA[
+				, Oper_stationNO = #{operStationno}
+			]]>
+		</if>
+		<if test="operPurview != null and operPurview != ''">
+			<![CDATA[
+				, Oper_purview = #{operPurview}
+			]]>
+		</if>
+		<if test="operRemark != null and operRemark != ''">
+			<![CDATA[
+				, oper_remark = #{operRemark}
+			]]>
+		</if>
+		<![CDATA[
+			where Oper_no = #{operNo}
+		]]>
+	</update>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

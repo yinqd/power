@@ -1,0 +1,210 @@
+/** 
+ + -------------------------- +
+ + report.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-11
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+/*预订量报表*/
+.cycle{
+	box-sizing:border-box;
+	padding:10px 0;
+	width:100%;
+	}
+.cycle > ul{
+	border:1px solid #77add1;
+	box-sizing:border-box;
+	display:table;
+	width:100%;
+	}
+.cycle > ul > li{
+	background-color:#a0cdeb;
+	color:#fff;
+	display:table-cell;
+	font-size:13px;
+	height:34px;
+	line-height:34px;
+	position:relative;
+	text-align:center;
+	width:25%;
+	}
+.cycle > ul > li:not(:last-child):after{
+	background-color:#77add1;
+	content:"";
+	display:block;
+	position:absolute;
+	top:8px;
+	right:0;
+	bottom:8px;
+	width:1px;
+	}
+.cycle > ul > li.current{
+	background-color:#fff;
+	color:#5a9fce;
+	}
+.cycle > ul > li.current:after{
+	background-color:#fff;
+	}
+.report-column{
+	box-sizing:border-box;
+	min-height:200px;
+	width:100%;
+	max-width:100%;
+	}
+.report-column1{
+	box-sizing:border-box;
+	width:100%;
+	max-width:100%;
+	}
+.report-status{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	}
+.report-status-level1{
+	margin-top:9px;
+	border-bottom:1px solid #ddd;
+	}
+.report-status-level2{
+	margin-top:-1px;
+	margin-bottom:9px;
+	border-bottom:1px solid #ddd;
+	}
+.report-status-level2:after{
+	content:"";
+	display:block;
+	position:absolute;
+	left:0;
+	right:0;
+	bottom:43px;
+	height:1px;
+	background-color:#ddd;
+}
+.report-status > li{
+	box-sizing:border-box;
+	display:table;
+	float:left;
+	width:50%;
+	border-top:1px solid #ddd;
+	}
+.report-status > li > div{
+	background-color:#fff;
+	border-right:1px solid #ddd;
+	color:#b6b6b6;
+	display:table-cell;
+	font-size:11px;
+	height:43px;
+	text-align:center;
+	vertical-align:middle;
+	}
+.report-status > li:nth-child(2n) > div{
+	border-right:0 none;
+	}
+.report-status-level1 li:only-child,
+.report-status-level2 li:only-child{
+	float:none;
+	width:100%;
+	}
+.report-status > li > div .number{
+	color:#648ca7;
+	display:block;
+	font-size:16px;
+	font-weight:bold;
+	line-height:16px;
+	}
+.report-status > li > div .sub-number{
+	margin-left:10px;
+	}
+.report-table-row{
+	border-bottom:1px solid #ddd;
+	font-size:12px;
+	overflow:hidden;
+	}
+.report-table-row > li{
+	float:left;
+	height:43px;
+	line-height:43px;
+	}
+/*.report-table-row > li:nth-child(1){
+	width:40%;
+	}
+.report-table-row > li:nth-child(2){
+	width:60%;
+	}
+*/
+.report-table-title{
+	color:#ababab;
+	} 
+.report-table{
+	margin:10px;
+	background-color:#fff;
+	border:1px solid #ddd;
+	border-bottom:0 none;
+	}
+.report-caption{
+	height:43px;
+	line-height:43px;
+	text-indent:10px;
+	border-bottom:1px solid #ddd;
+}
+.report-table .report-table-row{
+	position:relative;
+	overflow: hidden;
+	zoom:1;
+	}
+/*
+.report-table .report-table-row:after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:50%;
+	right:10px;
+	width:0px; 
+	height:0px; 
+	border-left:5px solid transparent;
+	border-right:5px solid transparent;
+	border-top:5px solid #ddd;
+	font-size:0px;
+	line-height:0px;
+	margin-top:-3px;
+	}
+.report-table .open:after{
+	border-top:0 none;
+	border-left:5px solid transparent;
+	border-right:5px solid transparent;
+	border-bottom:5px solid #ddd;
+	}
+
+#default .report-table .report-table-row:after{
+	display:none;
+	}
+*/
+.report-table-details{
+	background-color:#f6f6f6;
+	font-size:12px;
+	}
+.report-table-details dl{
+	overflow:hidden;
+	}
+.report-table-details dl > dt,
+.report-table-details dl > dd{
+	float:left;
+	line-height:30px;
+	}
+.report-table-details dl > dt{
+	color:#858585;
+	width:20%;
+	text-align:right;
+	}
+.report-table-details dl > dd{
+	color:#7abee7;
+	width:30%;
+	text-align:left;
+	text-indent:1em;
+	}

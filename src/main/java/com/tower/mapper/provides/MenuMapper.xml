@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IMenuDAO">
+	<resultMap id="menuMap" type="com.tower.entity.provides.MenuEntity">
+		<result column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="menu_url" property="menuUrl"/>
+		<result column="menu_level" property="menuLevel"/>
+		<result column="modify_time" property="modifyTime"/>
+		<result column="modify_no" property="modifyNo"/>
+		<result column="modify_name" property="modifyName"/>
+		<result column="menu_parent_id" property="menuParentId"/>
+		<result column="menu_parent_name" property="menuParentName"/>
+		<result column="module_id" property="moduleId"/>
+		<result column="module_name" property="moduleName"/>
+		<result column="need_flag" property="needFlag"/>
+	</resultMap>
+	<select id="queryMenuList" resultMap="menuMap">
+		<![CDATA[
+		select * from (
+			select 
+				m.menu_id menu_id , m.menu_name menu_name , m.menu_url menu_url , m.menu_level menu_level , 
+				m.modify_time modify_time , m.modify_no modify_no , oper_name modify_name , p.menu_id menu_parent_id ,
+			 	p.menu_name menu_parent_name , m.module_id module_id , module_name ,m.need_flag need_flag , ROWNUM rn
+			from T_MENU_INFO m LEFT JOIN T_MENU_INFO p on m.menu_parent_id = p.menu_id
+			inner join T_MODULE_INFO mo on m.module_id = mo.module_id
+			inner join T_POS_OPERATOR op on m.modify_no = op.oper_no
+			where status_flag = '1'
+		]]>	
+		<if test="moduleId != null and moduleId != ''">
+			<![CDATA[
+				and m.module_id = #{moduleId}
+			]]>
+		</if>
+		<if test="moduleLevel != null and moduleLevel != ''">
+			<![CDATA[
+				and m.module_level = #{moduleLevel}
+			]]>
+		</if>
+		<if test="moduleName != null and moduleName != ''">
+			<![CDATA[
+				and m.module_name like '%${moduleName}%'
+			]]>
+		</if>
+		<![CDATA[
+			AND ROWNUM <= ${pageIndex * pageCount} ) t where rowno > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	
+	<select id="queryMenuCount" resultType="java.lang.Integer">
+		<![CDATA[
+			select 
+				count(1)
+			from T_MENU_INFO m LEFT JOIN T_MENU_INFO p on m.menu_parent_id = p.menu_id
+			inner join T_MODULE_INFO mo on m.module_id = mo.module_id
+			inner join T_POS_OPERATOR op on m.modify_no = op.oper_no
+			where status_flag = '1'
+		]]>	
+		<if test="moduleId != null and moduleId != ''">
+			<![CDATA[
+				and m.module_id = #{moduleId}
+			]]>
+		</if>
+		<if test="moduleLevel != null and moduleLevel != ''">
+			<![CDATA[
+				and m.module_level = #{moduleLevel}
+			]]>
+		</if>
+		<if test="moduleName != null and moduleName != ''">
+			<![CDATA[
+				and m.module_name like '%${moduleName}%'
+			]]>
+		</if>
+	</select>
+	<select id="getMenu" resultMap="menuMap">
+		<![CDATA[
+			select * from T_MENU_INFO where menu_id = #{menuId}
+		]]>
+	</select>
+	<select id="getMenuByUrlAndRole" resultMap="menuMap">
+		<![CDATA[
+			select m.* from T_MENU_INFO m inner join T_MENU_ROLE mr on m.menu_id = mr.menu_id  where menu_url = #{menuId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</select>
+	<insert id="saveMenu">
+		<![CDATA[
+			insert into T_MENU_INFO (
+				menu_id , menu_name , menu_url , menu_level , modify_no , oper_no , menu_parent_id , module_id , status_flag , need_flag
+			)values(
+				#{menuId} , #{menuName} , #{menuUrl} , #{menuLevel} , #{modifyNo} , #{operNo} , #{menuParentId} , #{moduleId} , '1' , #{needFlag}
+			)
+		]]>
+	</insert>
+	<update id="updateMenu">
+		<![CDATA[
+			update T_MENU_INFO set 
+			oper_time = sysdate , 
+			oper_no = #{operNo} 
+		]]>
+		<if test="menuName != null and menuName != ''">
+			<![CDATA[
+				, menu_name = #{menuName}
+			]]>
+		</if><if test="menuUrl != null and menuUrl != ''">
+			<![CDATA[
+				, menu_url = #{menuUrl}
+			]]>
+		</if><if test="menuLevel != null and menuLevel != ''">
+			<![CDATA[
+				, menu_level = #{menuLevel}
+			]]>
+		</if><if test="menuParentId != null and menuParentId != ''">
+			<![CDATA[
+				, menu_parent_id = #{menuParentId}
+			]]>
+		</if><if test="moduleId != null and moduleId != ''">
+			<![CDATA[
+				, module_id = #{moduleId}
+			]]>
+		</if><if test="statusFlag != null and statusFlag != ''">
+			<![CDATA[
+				, status_flag = #{statusFlag}
+			]]>
+		</if><if test="needFlag != null and needFlag != ''">
+			<![CDATA[
+				, need_flag = #{needFlag}
+			]]>
+		</if>
+		<![CDATA[
+				where menu_id = #{menuId}
+			]]>
+	</update>
+	<resultMap id="menuRespMap" type="com.tower.resp.provides.MenuResp">
+		<result column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+	</resultMap>
+	<select id="queryOneMenuList" resultMap="menuRespMap">
+		<![CDATA[
+			select menu_id , menu_name from T_MENU_INFO where menu_level = '1' and status_flag = '1'
+		]]>
+	</select>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

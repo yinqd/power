@@ -1,0 +1,28 @@
+/** 
+ + -------------------------- +
+ + ie.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-04-01 15:00:00
+ + -------------------------- +
+**/
+input[type="checkbox"]{
+	vertical-align:middle;
+	}
+.ie-vam{
+	
+	}
+.ie-vam input{
+	vertical-align:middle;
+}
+.input-group .placeholderBox{
+	display:table-cell;/*ie 9*/
+}
+.input-group .placeholderBox .form-control{
+	display:inline-block;
+	width:100%;
+}

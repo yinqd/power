@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IUserRoleDAO">
+	<resultMap id="userRoleMap" type="com.tower.entity.provides.UserRoleEntity">
+		<result column="user_id" property="userId"/>
+		<result column="role_id" property="roleId"/>
+		<result column="role_name" property="roleName"/>
+	</resultMap>
+	<select id="queryUserRoleList" resultMap="userRoleMap">
+		<![CDATA[
+		select mr.role_id role_id , role_name from t_user_role mr 
+		inner join t_role_info r on mr.role_id = r.role_id
+		where user_id = #{userId} and mr.status_flag = '1' and r.status_flag = '1'
+		]]>
+	</select>
+	<insert id="beathUserRole">
+		<![CDATA[
+			insert into t_user_role (
+				user_id , role_id , status_flag
+			)values
+		]]>
+		<foreach collection="list" item="item">
+			<![CDATA[
+				(#{item.userId} , #{item.roleId} , '1')
+			]]>
+		</foreach>
+	</insert>
+	<delete id="delUserRole">
+		<![CDATA[
+			update t_user_role set status_flag = "-1" where user_id = #{userId}
+		]]>
+		<if test="list != null and list.size() > 0">
+			AND role_id IN  
+            <foreach  
+                collection="list"  
+                item="item"  
+                open="("  
+                separator=","  
+                close=")">  
+                #{item}  
+            </foreach>  
+		</if>
+	</delete>
+	<select id="queryRoleByUser" resultType="java.lang.String">
+		<![CDATA[
+			select role_id from t_user_role where status_flag = '1' and user_id = #{userId}
+		]]>
+	</select>
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

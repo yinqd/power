@@ -1,0 +1,128 @@
+/** 
+ + -------------------------- +
+ + shop.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2015-01
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+body{
+	padding-top:0;
+}
+.marked{
+	position: relative;
+	padding-left:30%;
+	width:100%;
+	color:#fff;
+	font-size:12px;
+	background-color:#36a6ee;
+	box-sizing:border-box;
+	/*box-shadow:0 5px 5px #ccc;
+	margin-bottom:10px;*/
+	border-bottom:1px solid #ddd;
+}
+.date{
+	position: absolute;
+	left:30px;
+	top:20px;
+	/*width:30%;*/
+	text-align: center;
+}
+.total{
+	padding:25px 30px 25px 0;
+	text-align:right;
+}
+.date > span,
+.date > em,
+.total > span,
+.total > em,
+.total > i{
+	clear:both;
+	display: block;
+	font-style:normal;
+}
+.date > em{
+	padding:20px 0;
+	font-size:46px;
+}
+.date > span:first-child{
+	font-size:20px;
+}
+.total > em{
+	padding-top:20px;
+	font-size:26px;
+}
+.total > em sub{
+	vertical-align:middle;
+	color:#d2d2d2;
+}
+.total > i{
+	width: 20px;
+	height: 20px;
+	float: right;
+	padding-bottom: 20px;
+}
+.total > i > img{
+	width:100%;
+}
+.reportList,
+.reportList > ul{
+	width:100%;
+}
+.reportList > ul > li{
+	border-bottom:1px solid #ddd;
+}
+.reportList > ul > li > a{
+	display:block;
+	position:relative;
+	padding-left:30%;
+	height:150px;
+	width:100%;
+	box-sizing:border-box;
+	line-height:150px;
+	text-align:center;
+	text-decoration:none;
+}
+.reportList > ul > li > a:after{
+	content:"";
+	display:block;
+	width:1px;
+	background-color:#ddd;
+	position:absolute;
+	top:0;
+	bottom:0;
+	left:30%;
+}
+.reportList > ul > li > a > em{
+	color:#4a4a4a;
+	font-style:normal;
+	font-size:18px;
+	/*font-weight:bold;*/
+}
+.icon-report{
+	position:absolute;
+	top:50%;
+	left:15%;
+	width:38px;
+	/*height:17px;*/
+	margin-left:-19px;
+	margin-top:-17px;
+	line-height:0;
+}
+.icon-report > img{
+	width:100%;
+}
+footer{
+	margin-top:10px;
+	line-height:34px;
+	text-align:center;
+}
+.btn-exit{
+	color:#36a6ee;
+	text-decoration:none;
+}

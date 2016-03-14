@@ -1,0 +1,219 @@
+/** 
+ + -------------------------- +
+ + statistical.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-12
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+/*今日统计报表*/
+body{
+	background-color:#f3f3f3;
+}
+.marked{
+	position: relative;
+	padding-left:30%;
+	width:100%;
+	color:#fff;
+	font-size:12px;
+	background-color:#36a6ee;
+	box-sizing:border-box;
+	box-shadow:0 5px 5px #ccc;
+	margin-bottom:10px;
+}
+.date{
+	position: absolute;
+	left:30px;
+	top:20px;
+	text-align: center;
+}
+.total{
+	padding:20px 30px 25px 0;
+	text-align:right;
+}
+.date > span,
+.date > em,
+.total > span,
+.total > em{
+	display: block;
+	font-size:14px;
+	font-style:normal;
+}
+.date > em{
+	padding:5px 0;
+	font-size:28px;
+}
+.date > em+span{
+	font-size:12px;
+}
+.total > em{
+	padding-top:25px;
+	font-size:30px;
+}
+.total > em:first-letter{
+	font-size:16px;
+}
+.report-table{
+	
+}
+.report-table-title,
+.report-table-tbody{
+	width:100%;
+}
+.report-table-row{
+	display:table;
+	width:100%;
+	}
+.report-table-row > li{
+	display:table-cell;
+	}
+.report-table-title .report-table-row > li{
+	height:30px;
+	width:30%;
+	color:#999;
+	font-size:12px;
+	text-align:left;
+	text-indent:20px;
+	vertical-align:middle;
+	box-sizing:border-box;
+	/*background-color:#f7f7f7;*/
+}
+.report-table-title .report-table-row > li:last-child{
+	text-align:right;
+	padding-right:10px;
+}
+.report-table-tbody{
+	padding-bottom:10px;
+	box-sizing:border-box;
+}
+.report-table-tbody .report-table-row{
+	border:1px solid #ddd;
+	border-width:1px 0 0;
+	background-color:#fff;
+}
+.report-table-tbody .report-table-row:first-child{
+	/*border-top-left-radius:5px;
+	border-top-right-radius:5px;*/
+}
+.report-table-tbody .report-table-row:last-child{
+	border-bottom:1px solid #ddd;
+	/*border-bottom-left-radius:5px;
+	border-bottom-right-radius:5px;*/
+}
+.report-table-tbody .report-table-row > li{
+	height:38px;
+	width:30%;
+	font-size:14px;
+	text-align:left;
+	vertical-align:middle;
+}
+.report-table-title .report-table-row > li:first-child,
+.report-table-tbody .report-table-row > li:first-child{
+	width:40%;
+}
+.report-table-tbody .report-table-row > li:first-child{
+	text-indent:10px;
+}
+.report-table-tbody .report-table-row > li:last-child{
+	text-align:right;
+}
+.report-table-tbody .report-table-row > li:last-child > span,
+.icon-arrow-down,
+.icon-arrow-up{
+	display:inline-block;
+	position: relative;
+	padding-right:20px;
+}
+.icon-arrow-down{
+	color:#f30;
+}
+.icon-arrow-up{
+	color:#36a6ee;
+}
+.icon-arrow-down:before,
+.icon-arrow-up:before,
+.icon-arrow-down:after,
+.icon-arrow-up:after{
+	content: "";
+	display:block;
+	position:absolute;
+}
+.icon-arrow-down:before,
+.icon-arrow-up:before{
+	top:2px;
+	right:8px;
+	height:12px;
+	width:2px;
+}
+.icon-arrow-down:after,
+.icon-arrow-up:after{
+	content: "";
+	display:block;
+	position:absolute;
+	top:0;
+	right: 5px;
+	width:6px;
+	height:6px;
+	border-top:2px solid #f30;
+	border-left:2px solid #f30;
+	border-top-right-radius:3px;
+	border-bottom-left-radius:3px;
+	-webkit-transform:rotate(45deg);
+}
+.icon-arrow-down:before{
+	background-color:#f30;
+}
+.icon-arrow-up:before{
+	background-color:#36a6ee;
+}
+.icon-arrow-up:after{
+	top:2px;
+	border-top-color:#36a6ee;
+	border-left-color:#36a6ee;
+	-webkit-transform:rotate(45deg);
+}
+.icon-arrow-down:after{
+	top:6px;
+	-webkit-transform:rotate(220deg);
+}
+.marked > .operation-time{
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+	height:100%;
+}
+.marked > .operation-time > .prev,
+.marked > .operation-time > .next{
+	display:block;
+	top:0;
+	bottom:0;
+	text-indent:-9999px;
+}
+.marked > .operation-time > .prev{
+	left:0;
+	padding-left:25px;
+}
+.marked > .operation-time > .next{
+	right:0;
+	padding-right:25px;
+}
+.marked > .operation-time > .prev:after,
+.marked > .operation-time > .next:after{
+	top:50%;
+	margin-top:-5px;
+}
+.marked > .operation-time > .next:after{
+	right:10px;
+}
+.marked > .operation-time > .prev:after{
+	left:10px;
+}
+.operation-time > .current-date{
+	display:none;
+}

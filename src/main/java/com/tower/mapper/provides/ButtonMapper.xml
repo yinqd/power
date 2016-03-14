@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tower.dao.provides.IButtonDAO">
+	<resultMap id="buttonMap" type="com.tower.entity.provides.ButtonEntity">
+		<result column="button_id" property="buttonId"/>
+		<result column="button_tag_attr" property="buttonTagAttr"/>
+		<result column="butto_value_attr" property="buttonValueAttr"/>
+		<result column="button_name_attr" property="buttonNameAttr"/>
+		<result column="menu_id" property="menuId"/>
+		<result column="menu_name" property="menuName"/>
+		<result column="need_flag" property="needFlag"/>
+	</resultMap>
+	<select id="queryButtonList" resultMap="buttonMap">
+		<![CDATA[
+		select * from (
+			select 
+				m.button_id button_id , m.button_tag_attr button_tag_attr , m.butto_value_attr butto_value_attr , m.button_name_attr button_name_attr , 
+				m.menu_id menu_id , menu_name , m.need_flag need_flag , ROWNUM rn
+			from T_BUTTON_INFO m LEFT JOIN T_MENU_INFO p on m.menu_id = p.menu_id
+			where m.status_flag = '1'
+		]]>	
+		<if test="monuId != null and monuId != ''">
+			<![CDATA[
+				and m.menu_id = #{monuId}
+			]]>
+		</if>
+		<![CDATA[
+			AND ROWNUM <= ${pageIndex * pageCount} ) t where rowno > ${(pageIndex - 1) * pageCount}
+		]]>
+	</select>
+	<select id="queryButtonCount" resultType="java.lang.Integer">
+		<![CDATA[
+			select count(1) from T_BUTTON_INFO m LEFT JOIN T_MENU_INFO p on m.menu_id = p.menu_id
+			where m.status_flag = '1'
+		]]>	
+		<if test="monuId != null and monuId != ''">
+			<![CDATA[
+				and m.menu_id = #{monuId}
+			]]>
+		</if>
+	</select>
+	<select id="getButton" resultMap="buttonMap">
+		<![CDATA[
+			select * from T_BUTTON_INFO where button_id = #{buttonId}
+		]]>
+	</select>
+	<insert id="saveModule">
+		<![CDATA[
+			insert into T_BUTTON_INFO (
+				button_id , button_tag_attr , butto_value_attr , button_name_attr , menu_id , status_flag , modify_no , oper_no , need_flag
+			)values(
+				#{buttonId} , #{buttonTagAttr} , #{buttoValueAttr} , #{buttonNameAttr} , #{menuId} , '1' , #{modifyNo} , #{operNo} , #{needFlag}
+			)
+		]]>
+	</insert>
+	<update id="updModule">
+		<![CDATA[
+			update T_BUTTON_INFO set 
+			oper_time = sysdate , 
+			oper_no = #{operNo} 
+		]]>
+		<if test="buttonTagAttr != null and buttonTagAttr != ''">
+			<![CDATA[
+				, button_tag_attr = #{buttonTagAttr}
+			]]>
+		</if><if test="buttoValueAttr != null and buttoValueAttr != ''">
+			<![CDATA[
+				, butto_value_attr = #{buttoValueAttr}
+			]]>
+		</if><if test="buttonNameAttr != null and buttonNameAttr != ''">
+			<![CDATA[
+				, button_name_attr = #{buttonNameAttr}
+			]]>
+		</if><if test="menuId != null and menuId != ''">
+			<![CDATA[
+				, menu_id = #{menuId}
+			]]>
+		</if><if test="statusFlag != null and statusFlag != ''">
+			<![CDATA[
+				, status_flag = #{statusFlag}
+			]]>
+		</if><if test="needFlag != null and needFlag != ''">
+			<![CDATA[
+				, need_flag = #{needFlag}
+			]]>
+		</if>
+		<![CDATA[
+				where button_id = #{buttonId}
+		]]>
+	</update>
+	
+	<cache type="org.mybatis.caches.memcached.MemcachedCache" ></cache>
+</mapper>

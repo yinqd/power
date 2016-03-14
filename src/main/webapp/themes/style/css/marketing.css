@@ -1,0 +1,353 @@
+/** 
+ + -------------------------- +
+ + marketing.css v3.0
+ + Web: http://www.keruyun.com
+ + -------------------------- +
+ + Author: Tian Xiao Yun
+ + QQ: 358926040
+ + Mail: misstian2008@163.com
+ + -------------------------- +
+ + Date: 2014-04-01 15:00:00
+ + -------------------------- +
+**/
+/*-----css layout-----*/
+/*----- list -----*/
+.list-coupons{/*优惠券列表*/
+	width:1045px;
+	}
+.list-coupons li{/**/
+	position:relative;
+	color:#707070;
+	border-top:1px dashed #dfdfdf;
+	}
+.list-coupons li h3{
+	position:relative;
+	margin-top:10px;
+	font-family:Microsoft YaHei;
+	font-size:14px;
+	}
+.list-coupons li p > span{
+	display:inline;
+	float:left;
+	padding-right:10px;
+	line-height:25px;
+	}
+.list-coupons li p:after{
+	content:" ";
+	display:block;
+	clear:both;}
+.list-coupons li p > span > span{margin-left:10px;color:#999;}
+.list-coupons li p > span.list-coupons-validity{
+	width:260px;
+	}
+.list-coupons li p > span.list-coupons-number{
+	width:280px;
+	}
+.list-coupons li p > span.list-coupons-use{
+	width:170px;
+	}
+.list-coupons li p > span.list-coupons-issue{
+	width:170px;
+	}
+.list-coupons li p > span > span.coupons-set .nobd{
+	border-color:transparent;
+	box-shadow:none;
+	}
+.list-coupons li p > span > span.coupons-set .nobd:hover{
+	border-color:#ccc;
+	}
+.list-coupons li .close-1{
+	display:none;
+	}
+.list-coupons li:hover p{
+	}
+.list-coupons li:hover .close-1{
+	display:inline-block;
+	}
+.list-conditions{/*锁定目标人群条件列表*/
+	padding-left:70px;
+	border-bottom:1px dashed #E8E8E8;
+	}
+.list-conditions:after{
+	content:" ";
+	clear:both;
+	display:block;
+	}
+.list-conditions li{
+	float:left;
+	width:115px;
+	height:36px;
+	margin-right:20px;
+	margin-bottom:10px;
+	color:#7f7f7f;
+	font-size:16px;
+	background-color:#e8f2fc;
+	line-height:36px;
+	text-align:center;
+	white-space:nowrap;
+	box-shadow:0px 0px 1px #d7e0e9 inset;
+	cursor:pointer;
+	}
+.list-conditions li:hover,.list-conditions li.select{/*选中状态*/
+	background-color:#5598dd;
+	color:#fff;
+	}
+.list-conditions li.disabled,.list-conditions li.disabled:hover{
+	background-color:#eee;
+	color:#7f7f7f;
+	}
+.list-conditions-options{/*每一类别的选项*/
+	position:relative;
+	}
+.list-conditions-options > label{
+	min-width:105px;
+	}
+.list-conditions-options > .close-1{
+	display:none;
+	}
+.list-conditions-options:hover > .close-1{display:inline-block;}
+/*--------------------- 券设置 ----------------------*/
+.coupons-set{
+	padding-top:3px;
+	padding-bottom:15px;
+	}
+.coupons-set-title{
+	display:inline-block;
+	/*width:120px;*/
+	text-align:right;
+	}
+.coupons-set .radio{
+	padding-top:0;
+	}
+
+/*优惠券*/
+.coupons-type-list{
+	padding-left:35px;
+	padding-top:10px;
+	overflow:hidden;
+	zoom:1;
+	}
+.coupons-type-list:after{
+	content:" ";
+	display:block;
+	clear:both;
+	}
+.coupons-type-list li{
+	float:left;
+	padding-right:40px;
+	}
+.coupons-type-list li span{
+	display:inline-block;
+	width:100px;
+	line-height:32px;
+	font-size:16px;
+	text-align:center;
+	border-radius:3px;
+	color:#9f9f9f;
+	cursor:pointer;
+	background-color:#fff;
+	border:1px solid #e5e5e5;
+	}
+.coupons-type-list li span.active{
+	color:#fff;
+	background-color:#3887d7;
+	}
+.coupons-type-list li span.disabled{
+	background-color:#f3f3f3;
+	}
+.table .view-plan{
+	display:block;
+	}	
+
+/*列表页 状态*/
+.panel-list-type ul{
+	padding:0 20px;
+	}
+.panel-list-type ul li{
+	position:relative;
+	}
+.panel-list-type ul li label{
+	padding-left:0;
+	}
+.panel-list-type ul li label i{
+	position:absolute;
+	right:5px;
+	top:14px;
+	}
+/*预览页 面板展示*/
+.view-state{
+	font-size:16px;
+	text-align:right;
+	}
+.view-state .color-blue{
+	font-weight:600;
+	font-size:18px;
+	}
+.view-panel-group .panel{
+	padding-bottom:30px;
+	border-radius:0;
+	}
+.view-panel-group .panel-title{
+	padding-left:45px;
+	background-image:none;
+	border-bottom:0 none;
+	}
+.view-panel-group .panel-body{
+	margin:0 30px;
+	padding-left:35px;
+	padding-right:35px;
+	border:1px solid #DFDFDF;
+	}
+/*营销方案 抽奖*/
+.lucky-draw .coupons-set-title{width:120px;}
+.award-item{/*添加奖项*/
+	position:relative;
+	padding-top:15px;
+	border-bottom:1px dashed #dfdfdf;
+	width:900px;
+	}
+.award-item .add-award-item,
+.award-item .close-1{
+	position:absolute;
+	right:-90px;
+	top:50%;
+	margin-top:-9px;
+	}
+.award-item .award-set-title{
+	display:inline-block;
+	min-width:66px;
+	float:left;
+	line-height: 34px;
+	padding-right:10px;
+}
+.award-item .award-ranking,
+.award-item .list-coupons-validity,
+.award-item .award-number,
+/*.award-item .award-set,*/
+.award-item .list-coupons-issue{
+	float:left;
+	padding-right:15px;
+}
+.award-item .award-ranking .prize-name,
+.award-item .coupons-set{
+	width:200px;
+	float:left;
+}
+.award-number .prize-number,
+.award-item .list-coupons-issue .each-send-num{
+	width:120px;
+	float:left;
+}
+.award-item .award-ranking .prize-name .form-control,
+.award-item .coupons-set .form-control{
+	width:200px;
+}
+.award-item .coupons-set{
+	}
+.award-item .award-set .award-type,
+.award-item .award-set .award-name{
+	float:left;
+	padding-right:10px;
+	width:120px;
+}
+.award-item .btnCreateCoupon{
+	display:inline-block;
+	line-height:34px;
+}
+/*新建礼品券 菜品列表*/
+.dishes{
+	position:relative;
+	width:800px;
+	margin-bottom:20px;
+	background-color:#fff;
+	border:1px solid #ccc;
+	}
+.dishes-classification,
+.dishes-menu{
+	height:274px;
+	padding:8px;
+	overflow-y:auto;
+	}
+.dishes-classification{/*菜品分类*/
+	/*float:left;*/
+	position:absolute;
+	top:0;
+	left:0;
+	width:250px;
+	border-right:1px solid #ccc;
+	}
+.dishes-menu{/*菜单*/
+	margin-left:250px;
+	}
+.dishes-items{/*菜品列表*/
+	
+	}
+.dishes-items li{
+	position:relative;
+	height:44px;
+	padding-left:10px;
+	line-height:44px;
+	overflow:hidden;
+	background-color:#fefefe;
+	}
+.dishes-menu .dishes-items li{
+	padding-right:170px;
+	word-break:break-all;
+}
+.dishes-items li.even{
+	background-color:#f8f8f8;
+	}
+.dishes-items li.current{
+	background-image:url("../img/blue-line.png");
+	background-repeat:repeat-y;
+	}
+.dishes-items li > span.dishe-name{
+	/*width:335px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;*/
+	}
+	
+.dishes-items li .dishe-switch{
+	position:absolute;
+	top:50%;
+	right:0;
+	margin-top:-14px;
+	line-height:normal;
+	}
+.dishes-items li .dishe-price{
+	position:absolute;
+	top:0;
+	right:80px;
+	width:80px;
+}
+/*营销方案通知规则*/
+.phrase-items{
+	padding-top:5px;
+	overflow:hidden;
+	zoom:1;
+}	
+.phrase-items li{
+	float:left;
+	margin-right:10px;
+	padding:3px 10px 4px;
+	background-color:#fff;
+	border:1px solid #ccc;
+}
+.duanxin-con{
+	position:relative;
+}
+.duanxin-con textarea{
+	height:60px;
+}
+.duanxin-con .charset-tip{
+	position:absolute;
+	left:660px;
+	top:42px;
+}
+.rules-type .control-label{
+	width:150px;
+}
+.inform-con .line-top-dashed{
+	margin:0 20px;
+}
