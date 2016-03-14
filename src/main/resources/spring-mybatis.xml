@@ -39,6 +39,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>classpath:com/tower/mapper/*.xml</value>
+				<value>classpath:com/tower/mapper/provides/*.xml</value>
 			</list>
 		</property>
 	</bean>

@@ -77,9 +77,14 @@
 			select * from T_MENU_INFO where menu_id = #{menuId}
 		]]>
 	</select>
-	<select id="getMenuByUrlAndRole" resultMap="menuMap">
+	<select id="getMenuByUrl" resultMap="menuMap">
 		<![CDATA[
-			select m.* from T_MENU_INFO m inner join T_MENU_ROLE mr on m.menu_id = mr.menu_id  where menu_url = #{menuId}
+			select * from T_MENU_INFO where menu_url = #{menuUrl} and status_flag = '1'
+		]]>
+	</select>
+	<select id="getMenuByIdAndRole" resultType="java.lang.Integer">
+		<![CDATA[
+			select count(1) from T_MENU_ROLE where menu_id = #{menuId}
 		]]>
 		<if test="list != null and list.size() > 0">
 			AND role_id IN  

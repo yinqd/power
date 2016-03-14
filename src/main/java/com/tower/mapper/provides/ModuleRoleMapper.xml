@@ -46,7 +46,7 @@
 		<result column="module_name" property="moduleName"/>
 		<result column="module_url" property="moduleUrl"/>
 	</resultMap>
-	<select id="queryModuleByRole" resultMap="menuRespMap">
+	<select id="queryModuleByRole" resultMap="moduleRespMap">
 		<![CDATA[
 			select module_id , module_name , module_url from t_module_role mr
 			inner join t_module_info m on mr.module_id = r.module_id 

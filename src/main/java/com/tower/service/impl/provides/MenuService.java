@@ -145,10 +145,12 @@ public class MenuService extends BaseService implements IMenuService{
 		return menuDAO.getMenu(menuId);
 	}
 
-	public List<MenuEntity> getMenuByUrlAndRole(String menuUrl,
-			Set<String> roles) {
-		// TODO Auto-generated method stub
-		return menuDAO.getMenuByUrlAndRole(menuUrl, roles);
+	public MenuEntity getMenuByUrl(String menuUrl) {
+		return menuDAO.getMenuByUrl(menuUrl);
+	}
+
+	public Integer getMenuByIdAndRole(String menuId, Set<String> roles) {
+		return menuDAO.getMenuByIdAndRole(menuId, roles);
 	}
 
 }

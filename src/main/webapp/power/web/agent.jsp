@@ -539,6 +539,7 @@ ctxPath = '<%=basePath%>';
 
 <script src="<%=basePath %>power/js/common.js" type="text/javascript"></script>
 <script src="<%=basePath %>power/js/agent.js" type="text/javascript"></script>
+<script src="<%=basePath %>power/js/provides.js" type="text/javascript"></script>
 <!-- END JAVASCRIPTS -->
 
 </body>

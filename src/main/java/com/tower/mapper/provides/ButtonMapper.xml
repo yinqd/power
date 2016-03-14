@@ -39,12 +39,13 @@
 			]]>
 		</if>
 	</select>
+	
 	<select id="getButton" resultMap="buttonMap">
 		<![CDATA[
 			select * from T_BUTTON_INFO where button_id = #{buttonId}
 		]]>
 	</select>
-	<insert id="saveModule">
+	<insert id="saveButton">
 		<![CDATA[
 			insert into T_BUTTON_INFO (
 				button_id , button_tag_attr , butto_value_attr , button_name_attr , menu_id , status_flag , modify_no , oper_no , need_flag
@@ -53,7 +54,7 @@
 			)
 		]]>
 	</insert>
-	<update id="updModule">
+	<update id="updButton">
 		<![CDATA[
 			update T_BUTTON_INFO set 
 			oper_time = sysdate , 

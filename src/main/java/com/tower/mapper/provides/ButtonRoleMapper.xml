@@ -52,7 +52,7 @@
 		<![CDATA[
 			select button_id , button_tag_attr , button_name_attr , button_value_attr from t_button_role mr
 			inner join t_menu_info m on mr.menu_id = r.menu_id 
-			where r.menu_id = #{menuId} and mr.role_id in 
+			where r.menu_url = #{menuUrl} and mr.role_id in 
 		]]>
 		 <foreach  
                 collection="list"  

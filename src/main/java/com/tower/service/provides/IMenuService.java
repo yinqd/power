@@ -52,10 +52,16 @@ public interface IMenuService {
 	 */
 	public MenuEntity getMenu(String menuId);
 	/**
+	 * 获取指定Url的菜单
+	 * @param menuId
+	 * @return
+	 */
+	public MenuEntity getMenuByUrl(String menuUrl);
+	/**
 	 * 根据链接和权限获取菜单
 	 * @param menuUrl
 	 * @param roles
 	 * @return
 	 */
-	public List<MenuEntity> getMenuByUrlAndRole (String menuUrl , Set<String> roles);
+	public Integer getMenuByIdAndRole (String menuId , Set<String> roles);
 }

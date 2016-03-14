@@ -19,9 +19,9 @@
 			where status_flag = '1'
 		]]>	
 	</select>
-	<select id="getModuleByUrlAndRole" resultMap="moduleMap">
+	<select id="getModuleByIdAndRole" resultType="java.lang.Integer">
 		<![CDATA[
-			select m.* from T_MODULE_INFO m inner join T_MODULE_ROLE mr on m.module_id = mr.module_id  where module_url = #{moduleId}
+			select count(1) from T_MODULE_ROLE where module_id = #{moduleId}
 		]]>
 		<if test="list != null and list.size() > 0">
 			AND role_id IN  
@@ -38,6 +38,11 @@
 	<select id="getModule" resultMap="moduleMap">
 		<![CDATA[
 			select * from T_MODULE_INFO where module_id = #{moduleId}
+		]]>
+	</select>
+	<select id="getModuleByUrl" resultMap="moduleMap">
+		<![CDATA[
+			select * from T_MODULE_INFO where module_url = #{moduleUrl} and status_flag = '1'
 		]]>
 	</select>
 	<insert id="saveModule">

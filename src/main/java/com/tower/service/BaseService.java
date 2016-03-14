@@ -1,5 +1,7 @@
 package com.tower.service;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +37,10 @@ public class BaseService {
         }
         return path;
     }
-	
+	/**
+	 * 获取当前用户的ID
+	 * @return
+	 */
 	protected Long getLoginUserId(){
 		try {
 			return Long.parseLong(request.getSession().getAttribute("userId").toString());
@@ -43,7 +48,15 @@ public class BaseService {
 		}
 		return 0L;
 	}
-	public static void main(String[] args) {
-		System.out.println(new BaseService().getLoginUserId());
+	/**
+	 * 获取当前用户权限
+	 * @return
+	 */
+	protected Set<String> getRoles() {
+		try {
+			return (Set<String>)request.getSession().getAttribute("roles");
+		} catch (Exception e) {
+		}
+		return null;
 	}
 }

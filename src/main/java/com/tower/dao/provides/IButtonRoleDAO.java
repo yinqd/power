@@ -31,5 +31,5 @@ public interface IButtonRoleDAO {
 	 * @param menuId
 	 * @param roleSet
 	 */
-	public List<ButtonResp> queryButtonByRoleAndMenu(@Param("menuId")String menuId , @Param("list")Set<String> roleSet);
+	public List<ButtonResp> queryButtonByRoleAndMenu(@Param("menuUrl")String menuUrl , @Param("list")Set<String> roleSet);
 }

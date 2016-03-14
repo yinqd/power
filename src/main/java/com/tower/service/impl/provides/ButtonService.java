@@ -3,6 +3,7 @@ package com.tower.service.impl.provides;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -18,6 +19,7 @@ import com.tower.enums.MsgCodeEnum;
 import com.tower.req.provides.ButtonReq;
 import com.tower.resp.MsgEntity;
 import com.tower.resp.PageResp;
+import com.tower.resp.provides.ButtonResp;
 import com.tower.service.BaseService;
 import com.tower.service.provides.IButtonRoleService;
 import com.tower.service.provides.IButtonService;
@@ -155,6 +157,16 @@ public class ButtonService extends BaseService implements IButtonService{
 	public ButtonEntity getButton(String buttonId) {
 		logger.info(getMethodPath() + ".Info Inner Params:buttonId=" + buttonId);
 		return buttonDAO.getButton(buttonId);
+	}
+
+	public List<ButtonResp> queryButtonByUrlAndRoles() {
+		String menuUrl = request.getServletPath();
+		Set<String> roles = getRoles();
+		logger.info(getMethodPath() + ".Info : menuUrl=" + menuUrl + ",roles=" + roles);
+		if(StringUtils.isBlank(menuUrl) || CollectionUtils.isEmpty(roles)){
+			return null;
+		}
+		return buttonRoleDAO.queryButtonByRoleAndMenu(menuUrl, roles);
 	}
 
 }

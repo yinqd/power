@@ -25,6 +25,12 @@ public interface IModuleService {
 	 */
 	public ModuleEntity getModule(@Param("moduleId")String moduleId);
 	/**
+	 * 根据链接获取模块
+	 * @param moduleUrl
+	 * @return
+	 */
+	public ModuleEntity getModuleByUrl(@Param("moduleUrl")String moduleUrl);
+	/**
 	 * 新增模块
 	 * @param moduleEntity
 	 */
@@ -46,5 +52,5 @@ public interface IModuleService {
 	 * @param roles
 	 * @return
 	 */
-	public List<ModuleEntity> getModuleByUrlAndRole (String moduleUrl , Set<String> roles);
+	public Integer getModuleByIdAndRole (String moduleId , Set<String> roles);
 }

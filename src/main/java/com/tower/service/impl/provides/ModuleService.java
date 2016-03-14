@@ -131,10 +131,13 @@ public class ModuleService extends BaseService implements IModuleService{
 		return updModule(moduleEntity);
 	}
 
-	public List<ModuleEntity> getModuleByUrlAndRole(String moduleUrl,
+	public ModuleEntity getModuleByUrl(String moduleUrl) {
+		return moduleDAO.getModuleByUrl(moduleUrl);
+	}
+
+	public Integer getModuleByIdAndRole(String moduleId,
 			Set<String> roles) {
-		// TODO Auto-generated method stub
-		return moduleDAO.getModuleByUrlAndRole(moduleUrl, roles);
+		return moduleDAO.getModuleByIdAndRole(moduleId, roles);
 	}
 
 }

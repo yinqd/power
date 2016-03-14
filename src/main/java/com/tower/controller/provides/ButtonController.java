@@ -8,11 +8,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tower.controller.BaseController;
 import com.tower.entity.provides.ButtonEntity;
 import com.tower.entity.provides.ButtonRoleEntity;
 import com.tower.req.provides.ButtonReq;
 import com.tower.resp.MsgEntity;
 import com.tower.resp.PageResp;
+import com.tower.resp.provides.ButtonResp;
 import com.tower.service.provides.IButtonRoleService;
 import com.tower.service.provides.IButtonService;
 
@@ -67,6 +69,16 @@ public class ButtonController {
 	@RequestMapping("getButton.action")
 	public ButtonEntity getButton(String buttonId){
 		return buttonService.getButton(buttonId);
+	}
+	/**
+	 * 获取当前用户角色当前菜单所能操作的按钮
+	 * @param menuId
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("queryButtons.action")
+	public List<ButtonResp> queryButtons(){
+		return buttonService.queryButtonByUrlAndRoles();
 	}
 	/**
 	 * 删除按钮

@@ -1,9 +1,12 @@
 package com.tower.service.provides;
 
+import java.util.List;
+
 import com.tower.entity.provides.ButtonEntity;
 import com.tower.req.provides.ButtonReq;
 import com.tower.resp.MsgEntity;
 import com.tower.resp.PageResp;
+import com.tower.resp.provides.ButtonResp;
 
 /**
  * 按钮管理Service
@@ -42,4 +45,9 @@ public interface IButtonService {
 	 * @return
 	 */
 	public MsgEntity delButton(String buttonId);
+	/**
+	 * 获取当前用户角色当前链接所能操作的按钮
+	 * @return
+	 */
+	public List<ButtonResp> queryButtonByUrlAndRoles();
 }

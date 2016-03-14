@@ -25,11 +25,17 @@ public interface IModuleDAO {
 	 */
 	public ModuleEntity getModule(@Param("moduleId")String moduleId);
 	/**
+	 * 根据链接获取模块
+	 * @param moduleId
+	 * @return
+	 */
+	public ModuleEntity getModuleByUrl(@Param("moduleUrl")String moduleUrl);
+	/**
 	 * 获取指定的菜单
 	 * @param moduleUrl
 	 * @return
 	 */
-	public List<ModuleEntity> getModuleByUrlAndRole(@Param("moduleUrl")String moduleUrl , Set<String> roles);
+	public Integer getModuleByIdAndRole(@Param("moduleId")String moduleId , Set<String> roles);
 	/**
 	 * 新增模块
 	 * @param moduleEntity

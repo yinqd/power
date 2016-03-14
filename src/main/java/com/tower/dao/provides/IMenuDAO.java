@@ -36,13 +36,18 @@ public interface IMenuDAO {
 	 * @return
 	 */
 	public MenuEntity getMenu(@Param("menuId")String menuId);
-	
+	/**
+	 * 获取指定Url的菜单
+	 * @param menuId
+	 * @return
+	 */
+	public MenuEntity getMenuByUrl(@Param("menuUrl")String menuUrl);
 	/**
 	 * 获取指定的菜单
 	 * @param menuId
 	 * @return
 	 */
-	public List<MenuEntity> getMenuByUrlAndRole(@Param("menuUrl")String menuUrl , Set<String> roles);
+	public Integer getMenuByIdAndRole(@Param("menuId")String menuId , Set<String> roles);
 	/**
 	 * 新增菜单
 	 * @param menuEntity
