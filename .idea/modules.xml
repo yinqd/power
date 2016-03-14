@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/power.iml" filepath="$PROJECT_DIR$/power.iml" />
       <module fileurl="file://$PROJECT_DIR$/tower.iml" filepath="$PROJECT_DIR$/tower.iml" />
     </modules>
   </component>
