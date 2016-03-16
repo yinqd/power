@@ -1,5 +1,6 @@
 package com.tower.service.impl.provides;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -24,7 +26,10 @@ public class ModuleRoleService extends BaseService implements IModuleRoleService
 	private IModuleRoleDAO moduleRoleDAO;
 	
 	public List<ModuleRoleEntity> queryModuleRoleList(String moduleId) {
-		return moduleRoleDAO.queryModuleRoleList(moduleId);
+		if(StringUtils.isNotBlank(moduleId)){
+			return moduleRoleDAO.queryModuleRoleList(moduleId);
+		}
+		return new ArrayList<ModuleRoleEntity>();
 	}
 
 	public MsgEntity beathModuleRole(List<ModuleRoleEntity> mrList) {

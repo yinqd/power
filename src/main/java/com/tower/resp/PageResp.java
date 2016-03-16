@@ -10,7 +10,7 @@ import java.util.List;
 public class PageResp {
 
 	private List data = new ArrayList();
-	private Integer recordCount;
+	private Integer recordCount = 0;
 	public List getData() {
 		return data;
 	}

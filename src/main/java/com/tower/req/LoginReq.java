@@ -26,4 +26,12 @@ public class LoginReq {
 	public void setOperPsd(String operPsd) {
 		this.operPsd = operPsd;
 	}
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("operName :【").append(operName).append("】,");
+		buffer.append("operNo :【").append(operNo).append("】,");
+		buffer.append("operPsd :【").append(operPsd).append("】");
+		return buffer.toString();
+	}
 }

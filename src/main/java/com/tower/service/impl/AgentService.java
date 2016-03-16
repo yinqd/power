@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.tower.dao.IAgentDAO;
@@ -22,11 +23,17 @@ public class AgentService extends BaseService implements IAgentService {
 	 * 分页查询代理商信息
 	 */
 	public PageResp searchAgentPage(AgentReq req) {
+		logger.info(getMethodPath() + ".info inner:" + req );
 		PageResp pr = new PageResp();
-		List<AgentEntity> agentList = this.agentDAO.searchAgentList(req);
-		Integer recordCount = this.agentDAO.searchAgentCount(req);
-		pr.setData(agentList);
-		pr.setRecordCount(recordCount);
+		try {
+			List<AgentEntity> agentList = this.agentDAO.searchAgentList(req);
+			Integer recordCount = this.agentDAO.searchAgentCount(req);
+			pr.setData(agentList);
+			pr.setRecordCount(recordCount);
+		} catch (Exception e) {
+			logger.error(getMethodPath() + ".error:" + e );
+		}
+		
 		return pr;
 	}
 
@@ -36,7 +43,12 @@ public class AgentService extends BaseService implements IAgentService {
 	 * @return
      */
 	public AgentEntity getAgentInfo(String agentId) {
-		return this.getAgentInfo(agentId);
+		if(StringUtils.isNotBlank(agentId)){
+			return this.getAgentInfo(agentId);
+		}else{
+			return new AgentEntity();
+		}
+		
 	}
 
 	/**
@@ -51,7 +63,7 @@ public class AgentService extends BaseService implements IAgentService {
 			return msg;
 		}
 		try {
-			//this.agentDAO.saveAgentInfo(agentEntity);
+			this.agentDAO.saveAgentInfo(agentEntity);
 			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
 			msg.setMsg("操作成功");
 		} catch (Exception e) {
@@ -90,10 +102,20 @@ public class AgentService extends BaseService implements IAgentService {
 	 * @return
 	 */
 	public MsgEntity delAgent(String agentId) {
-		AgentEntity agentEntity = new AgentEntity();
-		agentEntity.setAgentId(agentId);
-		agentEntity.setAgentFlag("0");
-		return this.updAgent(agentEntity);
+		MsgEntity msg = new MsgEntity();
+		try {
+			AgentEntity agentEntity = new AgentEntity();
+			agentEntity.setAgentId(agentId);
+			agentEntity.setAgentFlag("0");
+			this.agentDAO.updAgentInfo(agentEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		return msg;
 	}
 
 }

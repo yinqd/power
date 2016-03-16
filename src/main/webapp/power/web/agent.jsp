@@ -7,7 +7,7 @@
   String basePath = request.getScheme() + "://"  + request.getServerName() + ":" + request.getServerPort() + path + "/";
 %>
 <!DOCTYPE html>
-<<script type="text/javascript">
+<script type="text/javascript">
 ctxPath = '<%=basePath%>';
 </script>
 <!--[if IE 8]>

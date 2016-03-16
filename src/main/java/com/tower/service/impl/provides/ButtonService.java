@@ -36,8 +36,13 @@ public class ButtonService extends BaseService implements IButtonService{
 	public PageResp queryButtonPage(ButtonReq req) {
 		logger.info(getMethodPath() + ".Info Inner Params :" + req.toString());
 		PageResp pr = new PageResp();
-		pr.setData(this.buttonDAO.queryButtonList(req));
-		pr.setRecordCount(this.buttonDAO.queryButtonCount(req));
+		try {
+			pr.setData(this.buttonDAO.queryButtonList(req));
+			pr.setRecordCount(this.buttonDAO.queryButtonCount(req));
+		} catch (Exception e) {
+			logger.error(getMethodPath() + ".error:" + e);
+		}
+		
 		return pr;
 	}
 

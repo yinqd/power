@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import com.tower.dao.provides.IRoleDAO;
@@ -22,8 +23,12 @@ public class RoleService extends BaseService implements IRoleService {
 	
 	public PageResp queryRolePage(RoleReq req) {
 		PageResp pr = new PageResp();
-		pr.setData(roleDAO.queryRoleList(req));
-		pr.setRecordCount(roleDAO.queryRoleCount(req));
+		try {
+			pr.setData(roleDAO.queryRoleList(req));
+			pr.setRecordCount(roleDAO.queryRoleCount(req));
+		} catch (Exception e) {
+			logger.error(getMethodPath() + ".error:" + e);
+		}
 		return pr;
 	}
 
@@ -33,7 +38,12 @@ public class RoleService extends BaseService implements IRoleService {
 
 	public RoleEntity getRole(String roleId) {
 		logger.info(getMethodPath() + ".info inner params:roleId=" + roleId);
-		return roleDAO.getRole(roleId);
+		if(StringUtils.isNotBlank(roleId)){
+			return roleDAO.getRole(roleId);
+		}else{
+			return new RoleEntity();
+		}
+		
 	}
 
 	public MsgEntity saveRole(RoleEntity roleEntity) {
@@ -86,12 +96,26 @@ public class RoleService extends BaseService implements IRoleService {
 
 	public MsgEntity delRole(String roleId) {
 		logger.info(getMethodPath() + ".info inner params:roleId=" + roleId);
-		RoleEntity roleEntity = new RoleEntity();
-		roleEntity.setOperNo(getLoginUserId().toString());
-		roleEntity.setModifyNo(getLoginUserId().toString());
-		roleEntity.setRoleId(roleId);
-		roleEntity.setStatusFlag("-1");
-		return updRole(roleEntity);
+		MsgEntity msg = new MsgEntity();
+		try {
+			RoleEntity roleEntity = new RoleEntity();
+			roleEntity.setOperNo(getLoginUserId().toString());
+			roleEntity.setModifyNo(getLoginUserId().toString());
+			roleEntity.setRoleId(roleId);
+			roleEntity.setStatusFlag("-1");
+			roleEntity.setOperNo(getLoginUserId().toString());
+			roleEntity.setModifyNo(getLoginUserId().toString());
+			this.roleDAO.updRole(roleEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			e.printStackTrace();
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		
+		return msg;
 	}
 
 }

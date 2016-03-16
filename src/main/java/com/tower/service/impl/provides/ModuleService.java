@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -37,7 +38,11 @@ public class ModuleService extends BaseService implements IModuleService{
 
 	public ModuleEntity getModule(String moduleId) {
 		logger.info(getMethodPath() + ".INNFO INNER PARAMS : moduleId=" + moduleId); 
-		return moduleDAO.getModule(moduleId);
+		if(StringUtils.isNotBlank(moduleId)){
+			return moduleDAO.getModule(moduleId);
+		}else{
+			return new ModuleEntity();
+		}
 	}
 
 	public MsgEntity saveModule(ModuleEntity moduleEntity) {
@@ -124,20 +129,42 @@ public class ModuleService extends BaseService implements IModuleService{
 
 	public MsgEntity delModule(String moduleId) {
 		logger.info(getMethodPath() + ".INNFO INNER PARAMS : moduleId=" + moduleId); 
-		ModuleEntity moduleEntity = new ModuleEntity();
-		moduleEntity.setModuleId(moduleId);
-		moduleEntity.setStatusFlag("-1");
-		moduleEntity.setOperNo(getLoginUserId().toString());
-		return updModule(moduleEntity);
+		MsgEntity msg = new MsgEntity();
+		
+		try {
+			ModuleEntity moduleEntity = new ModuleEntity();
+			moduleEntity.setModuleId(moduleId);
+			moduleEntity.setStatusFlag("-1");
+			moduleEntity.setOperNo(getLoginUserId().toString());
+			moduleEntity.setModifyNo(getLoginUserId().toString());
+			moduleEntity.setOperNo(getLoginUserId().toString());
+			this.moduleDAO.updModule(moduleEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			e.printStackTrace();
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		return msg;
 	}
 
 	public ModuleEntity getModuleByUrl(String moduleUrl) {
-		return moduleDAO.getModuleByUrl(moduleUrl);
+		if(StringUtils.isNotBlank(moduleUrl)){
+			return moduleDAO.getModuleByUrl(moduleUrl);
+		}else{
+			return new ModuleEntity();
+		}
 	}
 
 	public Integer getModuleByIdAndRole(String moduleId,
 			Set<String> roles) {
-		return moduleDAO.getModuleByIdAndRole(moduleId, roles);
+		if(StringUtils.isNotBlank(moduleId)
+				&& !CollectionUtils.isEmpty(roles)){
+			return moduleDAO.getModuleByIdAndRole(moduleId, roles);
+		}
+		return 0;
 	}
 
 }

@@ -7,6 +7,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -35,8 +36,13 @@ public class MenuService extends BaseService implements IMenuService{
 	public PageResp queryMenuPage(MenuReq req) {
 		logger.info(getMethodPath() + ".Info Inner Params :" + req.toString());
 		PageResp pr = new PageResp();
-		pr.setData(this.menuDAO.queryMenuList(req));
-		pr.setRecordCount(this.menuDAO.queryMenuCount(req));
+		try {
+			pr.setData(this.menuDAO.queryMenuList(req));
+			pr.setRecordCount(this.menuDAO.queryMenuCount(req));
+		} catch (Exception e) {
+			logger.info(getMethodPath() + ".error:" + e);
+		}
+		
 		return pr;
 	}
 
@@ -125,11 +131,24 @@ public class MenuService extends BaseService implements IMenuService{
 	 * 删除菜单
 	 */
 	public MsgEntity delMenu(String menuId) {
-		MenuEntity menuEntity = new MenuEntity ();
-		menuEntity.setMenuId(menuId);
-		menuEntity.setStatusFlag("-1");
-		menuEntity.setOperNo(getLoginUserId().toString());
-		return updMenu(menuEntity);
+		MsgEntity msg = new MsgEntity();
+		logger.info(getMethodPath() + ".Info Inner Params menuId=" + menuId);
+		try {
+			MenuEntity menuEntity = new MenuEntity ();
+			menuEntity.setMenuId(menuId);
+			menuEntity.setStatusFlag("-1");
+			menuEntity.setOperNo(getLoginUserId().toString());
+			menuEntity.setOperNo(getLoginUserId().toString());
+			this.menuDAO.updateMenu(menuEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			e.printStackTrace();
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		return msg;
 	}
 	/**
 	 * 获取所有的一级菜单
@@ -142,15 +161,29 @@ public class MenuService extends BaseService implements IMenuService{
 	 * 获取指定的菜单基础信息
 	 */
 	public MenuEntity getMenu(String menuId) {
-		return menuDAO.getMenu(menuId);
+		if(StringUtils.isNotBlank(menuId)){
+			return menuDAO.getMenu(menuId);
+		}else{
+			return new MenuEntity();
+		}
+		
 	}
 
 	public MenuEntity getMenuByUrl(String menuUrl) {
-		return menuDAO.getMenuByUrl(menuUrl);
+		if(StringUtils.isNotBlank(menuUrl)){
+			return menuDAO.getMenuByUrl(menuUrl);
+		}else{
+			return new MenuEntity();
+		}
+		
 	}
 
 	public Integer getMenuByIdAndRole(String menuId, Set<String> roles) {
-		return menuDAO.getMenuByIdAndRole(menuId, roles);
+		if(StringUtils.isNotBlank(menuId) && CollectionUtils.isEmpty(roles)){
+			return menuDAO.getMenuByIdAndRole(menuId, roles);
+		}
+		
+		return 0;
 	}
 
 }

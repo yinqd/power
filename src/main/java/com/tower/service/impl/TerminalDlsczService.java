@@ -23,9 +23,13 @@ public class TerminalDlsczService extends BaseService implements ITerminalDlsczS
 	public PageResp searchTerminalDlsczPage(TerminalDlsczReq req) {
 		logger.info(getMethodPath() + ".Info inner params :" + req);
 		PageResp pr = new PageResp();
-		pr.setData(dlsczDAO.queryAgentDlsczList(req));
-        Integer recordCount = dlsczDAO.queryAgentDlsczCount(req);
-        pr.setRecordCount(recordCount == null ? 0 : recordCount);
+		try{
+			pr.setData(dlsczDAO.queryAgentDlsczList(req));
+	        Integer recordCount = dlsczDAO.queryAgentDlsczCount(req);
+	        pr.setRecordCount(recordCount == null ? 0 : recordCount);
+		}catch(Exception e){
+			logger.info(getMethodPath() + ".error" + e);
+		}
         return pr;
 	}
 	/**

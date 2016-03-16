@@ -1,5 +1,6 @@
 package com.tower.service.impl.provides;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -24,7 +26,10 @@ public class MenuRoleService extends BaseService implements IMenuRoleService{
 	private IMenuRoleDAO menuRoleDAO;
 	
 	public List<MenuRoleEntity> queryMenuRoleList(String menuId) {
-		return menuRoleDAO.queryMenuRoleList(menuId);
+		if(StringUtils.isNotBlank(menuId)){
+			return menuRoleDAO.queryMenuRoleList(menuId);
+		}
+		return new ArrayList<MenuRoleEntity>();
 	}
 
 	public MsgEntity beathMenuRole(List<MenuRoleEntity> mrList) {
@@ -80,7 +85,10 @@ public class MenuRoleService extends BaseService implements IMenuRoleService{
 	 * 查询当前用户角色所能访问的所有菜单
 	 */
 	public List<MenuResp> queryMenuByRoleId(Set<String> roleIdSet) {
-		return menuRoleDAO.queryMenuByRole(roleIdSet);
+		if(!CollectionUtils.isEmpty(roleIdSet)){
+			return menuRoleDAO.queryMenuByRole(roleIdSet);
+		}
+		return new ArrayList<MenuResp>();
 	}
 
 	/**
@@ -88,7 +96,10 @@ public class MenuRoleService extends BaseService implements IMenuRoleService{
 	 */
 	public List<MenuResp> queryMenuByRoleAndModule(Set<String> roleIdSet,
 			String moduleId) {
-		return menuRoleDAO.queryMenuByRoleAndModule(roleIdSet, moduleId);
+		if(!CollectionUtils.isEmpty(roleIdSet) && StringUtils.isNotBlank(moduleId)){
+			return menuRoleDAO.queryMenuByRoleAndModule(roleIdSet, moduleId);
+		}
+		return new ArrayList<MenuResp>();
 	}
 
 }

@@ -37,21 +37,28 @@ public class UserService extends BaseService implements IUserService{
 	 * 根据用户名密码获取用户代理对象
 	 */
 	public MsgEntity getUserByNameAndPsd(LoginReq req) {
+		logger.info(getMethodPath() + ".info inner : " +req);
 		MsgEntity msg = new MsgEntity();
-		UserResp resp = userDAO.getUserReqByNameAndPsd(req);
-		/*验证用户不存在*/
-		if(resp == null){
+		try {
+			UserResp resp = userDAO.getUserReqByNameAndPsd(req);
+			/*验证用户不存在*/
+			if(resp == null){
+				msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+				msg.setMsg("用户名密码错误");
+			}else{
+				msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+				/*向session中存储用户的一些基础信息*/
+				HttpSession session = request.getSession();
+				session.setAttribute("operName", resp.getOperName());
+				session.setAttribute("userId", resp.getOperNo());
+				session.setAttribute("operStationno", resp.getOperStationno());
+				session.setAttribute("operStationname", resp.getOperStationname());
+			}
+		} catch (Exception e) {
+			logger.error(getMethodPath() + ".error : " + e);
 			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
-			msg.setMsg("用户名密码错误");
-		}else{
-			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
-			/*向session中存储用户的一些基础信息*/
-			HttpSession session = request.getSession();
-			session.setAttribute("operName", resp.getOperName());
-			session.setAttribute("userId", resp.getOperNo());
-			session.setAttribute("operStationno", resp.getOperStationno());
-			session.setAttribute("operStationname", resp.getOperStationname());
 		}
+		
 		return msg;
 	}
 	/**
@@ -59,15 +66,25 @@ public class UserService extends BaseService implements IUserService{
 	 */
 	public PageResp queryUserPage(UserReq req) {
 		PageResp pr = new PageResp();
-		pr.setData(userDAO.queryUserList(req));
-		pr.setRecordCount(userDAO.queryUserCount(req));
+		try{
+			pr.setData(userDAO.queryUserList(req));
+			pr.setRecordCount(userDAO.queryUserCount(req));
+		}catch(Exception e){
+			logger.error(getMethodPath() + ".error:" + e);
+		}
+		
 		return pr;
 	}
 	/**
 	 * 获取指定用户的信息
 	 */
 	public UserEntity getUser(String userId) {
-		return userDAO.getUser(userId);
+		if(StringUtils.isNotBlank(userId)){
+			return userDAO.getUser(userId);
+		}else{
+			return new UserEntity();
+		}
+		
 	}
 	/**
 	 * 新增用户
@@ -155,11 +172,23 @@ public class UserService extends BaseService implements IUserService{
 	 */
 	public MsgEntity delUser(String userId) {
 		logger.info(getMethodPath() + ".Info Inner Params userId=" + userId);
-		UserEntity userEntity = new UserEntity();
-		userEntity.setOperNo(userId);
-		userEntity.setUpFlag(1);
-		userEntity.setOperState("-1");
-		return updUser(userEntity);
+		MsgEntity msg = new MsgEntity();
+		try {
+			UserEntity userEntity = new UserEntity();
+			userEntity.setOperNo(userId);
+			userEntity.setUpFlag(1);
+			userEntity.setOperState("-1");
+			this.userDAO.updUser(userEntity);
+			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
+			msg.setMsg("操作成功");
+		} catch (Exception e) {
+			msg.setCode(MsgCodeEnum.SERVICE_FAIL_CODE);
+			msg.setMsg("操作失败");
+			e.printStackTrace();
+			logger.error(getMethodPath() + ".error:" + e.getMessage());
+		}
+		
+		return msg;
 	}
 	/**
 	 * 修改用户密码

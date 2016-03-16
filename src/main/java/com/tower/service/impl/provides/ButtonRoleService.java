@@ -1,5 +1,6 @@
 package com.tower.service.impl.provides;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -26,7 +28,9 @@ public class ButtonRoleService extends BaseService implements IButtonRoleService
 	 * 查询按钮权限
 	 */
 	public List<ButtonRoleEntity> queryButtonRoleList(String buttonId) {
-		return buttonRoleDAO.queryButtonRoleList(buttonId);
+		if(StringUtils.isNotBlank(buttonId))
+			return buttonRoleDAO.queryButtonRoleList(buttonId);
+		return new ArrayList<ButtonRoleEntity>();
 	}
 
 	public MsgEntity beathButtonRole(List<ButtonRoleEntity> mrList) {
@@ -81,7 +85,9 @@ public class ButtonRoleService extends BaseService implements IButtonRoleService
 
 	public List<ButtonResp> queryButtonByRoleAndMenu(String menuId,
 			Set<String> roleSet) {
-		return buttonRoleDAO.queryButtonByRoleAndMenu(menuId, roleSet);
+		if(StringUtils.isNotBlank(menuId) && !CollectionUtils.isEmpty(roleSet))
+			return buttonRoleDAO.queryButtonByRoleAndMenu(menuId, roleSet);
+		return new ArrayList<ButtonResp>();
 	}
 
 }

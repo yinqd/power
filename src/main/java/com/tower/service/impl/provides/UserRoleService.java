@@ -1,5 +1,6 @@
 package com.tower.service.impl.provides;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Set;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -23,7 +25,11 @@ public class UserRoleService extends BaseService implements IUserRoleService{
 	private IUserRoleDAO userRoleDAO;
 	
 	public List<UserRoleEntity> queryUserRoleList(String UserId) {
-		return userRoleDAO.queryUserRoleList(UserId);
+		if(StringUtils.isNotBlank(UserId)){
+			return userRoleDAO.queryUserRoleList(UserId);
+		}else{
+			return new ArrayList<UserRoleEntity>();
+		}
 	}
 
 	public MsgEntity beathUserRole(List<UserRoleEntity> mrList) {
@@ -75,8 +81,16 @@ public class UserRoleService extends BaseService implements IUserRoleService{
 		return msg;
 	}
 
+	/**
+	 * 查询用户权限
+	 */
 	public Set<String> queryRoleByUser(String userId){
-		return userRoleDAO.queryRoleByUser(userId);
+		if(StringUtils.isNotBlank(userId)){
+			return userRoleDAO.queryRoleByUser(userId);
+		}else{
+			return new HashSet<String>();
+		}
+		
 	}
 
 }
