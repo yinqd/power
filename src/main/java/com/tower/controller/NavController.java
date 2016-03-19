@@ -20,7 +20,13 @@ public class NavController {
 	
 	@RequestMapping("agentList.action")
 	public ModelAndView agentList(){
-		ModelAndView mav = new ModelAndView("");
+		ModelAndView mav = new ModelAndView("/agent/agent_list.jsp");
+		return mav;
+	}
+	
+	@RequestMapping("agentAdd.action")
+	public ModelAndView agentAdd(){
+		ModelAndView mav = new ModelAndView("/agent/agent_add.jsp");
 		return mav;
 	}
 	

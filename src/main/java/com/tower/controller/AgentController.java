@@ -13,6 +13,7 @@ import com.tower.resp.PageResp;
 import com.tower.service.IAgentService;
 
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @RequestMapping("agent")
 @Controller
@@ -51,9 +52,18 @@ public class AgentController {
 	public MsgEntity updAgentInfo(AgentEntity agentEntity){
 		return this.agentService.updAgent(agentEntity);
 	}
-	@ResponseBody
+	
+	@RequestMapping(value="updAgentShow.action")
+	public ModelAndView updAgentShow(String agentId){
+		ModelAndView mav = new ModelAndView("/agent/agent_edit.jsp");
+		mav.addObject("agent", this.agentService.getAgentInfo(agentId));
+		return mav;
+	}
+	
 	@RequestMapping(value="getAgent.action")
-	public AgentEntity updAgentShow(String id){
-		return this.agentService.getAgentInfo(id);
+	public ModelAndView getAgent(String agentId){
+		ModelAndView mav = new ModelAndView("/agent/agent_detail.jsp");
+		mav.addObject("agent", this.agentService.getAgentInfo(agentId));
+		return mav;
 	}
 }

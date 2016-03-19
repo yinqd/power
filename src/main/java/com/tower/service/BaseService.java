@@ -49,6 +49,17 @@ public class BaseService {
 		return 0L;
 	}
 	/**
+	 * 获取当前用户的用户名
+	 * @return
+	 */
+	protected String getLoginUserName() {
+		try {
+			return request.getSession().getAttribute("userName").toString();
+		} catch (Exception e) {
+		}
+		return "admin";
+	}
+	/**
 	 * 获取当前用户权限
 	 * @return
 	 */

@@ -44,7 +44,7 @@ public class AgentService extends BaseService implements IAgentService {
      */
 	public AgentEntity getAgentInfo(String agentId) {
 		if(StringUtils.isNotBlank(agentId)){
-			return this.getAgentInfo(agentId);
+			return this.agentDAO.getAgentInfo(agentId);
 		}else{
 			return new AgentEntity();
 		}
@@ -63,6 +63,14 @@ public class AgentService extends BaseService implements IAgentService {
 			return msg;
 		}
 		try {
+			String agentId = "80000001";
+			synchronized (agentId) {
+				String maxAgentId = agentDAO.getMaxId();
+				agentId = maxAgentId == null ? "80000001" : String.valueOf(Integer.valueOf(maxAgentId) + 1);
+			}
+			agentEntity.setAgentId(agentId);
+			agentEntity.setOperateId(getLoginUserName());
+			logger.info(getMethodPath() + ".Info inner params : " + agentEntity);
 			this.agentDAO.saveAgentInfo(agentEntity);
 			msg.setCode(MsgCodeEnum.SERVICE_SUCCESS_CODE);
 			msg.setMsg("操作成功");

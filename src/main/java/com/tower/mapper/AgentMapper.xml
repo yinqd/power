@@ -92,14 +92,18 @@
 			SELECT * FROM T_AGENT_INFO WHERE AGENT_ID = #{agentId}
 		]]>
 	</select>
-		
-	<insert id="saveAgentInfo" >
+	<select id="getMaxId" resultType="java.lang.String">
+		<![CDATA[
+			select max(agent_id) from T_AGENT_INFO
+		]]>
+	</select>
+	<insert id="saveAgentInfo" parameterType="com.tower.entity.AgentEntity">
 		<![CDATA[
 			INSERT INTO T_AGENT_INFO ( 
-				AGENT_ID , AGENT_NAME , AGENT_LINKMAN , AGENT_PHONE , AGENT_ADDR , AGENT_FLAG , OPERATE_ID , REMARK , BK1 , BK2 , BK3 , NODE_NO
+				AGENT_ID , AGENT_NAME , AGENT_LINKMAN , AGENT_PHONE , AGENT_ADDR , AGENT_FLAG , OPERATE_ID , REMARK  , NODE_NO
 			)
 			VALUES   
-			(max(agentId) + 1 , #{agentName} , #{agentLinkman} , #{agentPhone} , #{agentAddr} , 1 ,  #{operateId} , #{remark} , #{bk1} , #{bk2} , #{bk3} , #{nodeNo})
+			(#{agentId} , #{agentName} , #{agentLinkman} , #{agentPhone} , #{agentAddr} , 1 ,  #{operateId} , #{remark}  , #{nodeNo})
 		]]>
 	</insert>	
     <update id="updAgentInfo">

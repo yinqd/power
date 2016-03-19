@@ -20,7 +20,11 @@ public interface IAgentDAO {
 	 * @return
 	 */
 	public Integer searchAgentCount(AgentReq req);
-
+	/**
+	 * 获取最大ID
+	 * @return
+	 */
+	public String getMaxId();
 	/**
 	 * 获取代理商详细信息
 	 * @param id
